@@ -65,10 +65,10 @@
     -webkit-tap-highlight-color:transparent;
     overflow:hidden;
     color:#fff;
-    background-color:#b02923;
+    background-color:#be9d6d;
     width:140rpx;
     height:60rpx;
-    border:1px solid #b02923;
+    border:1px solid #be9d6d;
     margin-bottom:14rpx;
 }
 .seatBut wx-text {
@@ -82,16 +82,16 @@
     -webkit-tap-highlight-color:transparent;
     overflow:hidden;
     color:#fff;
-    background-color:#b02923;
+    background-color:#be9d6d;
     width:140rpx;
     height:60rpx;
-    border:1px solid #b02923;
+    border:1px solid #be9d6d;
     margin-bottom:14rpx;
 }
 .tabCalled{
     width:40%;
     height:2px;
-    background-color:#b02923;
+    background-color:#be9d6d;
     position: absolute;
     bottom:0;
     -webkit-transition:left .35s; /* Safari */

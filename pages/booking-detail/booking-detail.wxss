@@ -15,7 +15,7 @@ page{
     float: right;
 }
 .iconfont:before{
-    color:#b02923;
+    color:#be9d6d;
     font-size:18px;
     padding-right: 10rpx;
     text-align: center;
@@ -43,7 +43,7 @@ page{
             transform:rotate(135deg);
 }
 button{
-    background-color:#b02923;
+    background-color:#be9d6d;
     color:#fff;
     margin-top:50rpx;
     width:80%;

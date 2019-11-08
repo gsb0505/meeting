@@ -7,6 +7,9 @@
   display: -webkit-box;
 	display: -webkit-flex;
   display: flex;
+  position:fixed;
+  width: 100%;
+  bottom:0px;
 }
 .menuWrap-item{
   text-align: center;
@@ -18,7 +21,7 @@
   display: inline-block;
   width: 150rpx;
   padding: 10rpx 0;
-  color: #b02923;
+  color: #be9d6d;
 }
 .menuWrap-item-navi span{
   font-size: 30px;

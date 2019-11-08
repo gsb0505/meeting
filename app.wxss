@@ -131,32 +131,19 @@ view,navigator{
 }
 
 .button-hover {
-    background-color: #b02923;
+    background-color: #be9d6d;
 }
 /** 添加自定义button点击态样式类**/
 .other-button-hover {
-    background-color: #b02923;
+    background-color: #be9d6d;
     color:#fff;
 }
 button{
-    background-color: #b02923;
+    background-color: #be9d6d;
     color:#fff;
     width:80%;
     margin-top:80px;
 
-}
-/* 二维码浮标 */
-.qrcode{
-  position: fixed;
-  right: 10px;
-  bottom: 50px;
-  color: #b02923;
-  font-size: 30px;
-  width: 40px;
-  height: 40px;
-  background-color: rgba(255, 255, 255, 1);
-  text-align: center;
-  line-height: 40px;
 }
 .qrcode span{
   font-size: 30px;

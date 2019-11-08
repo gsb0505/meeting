@@ -8,7 +8,6 @@
             时间：<picker disabled="{{picker}}" bindchange="bindPickerOrder" value="{{first}}" range="{{daytime}}"><text class="picker">{{daytime[first]}}</text>
             </picker>
         </view>
-        <view class="header-qrcode iconfont icon-qrcode" bindtap="getScanning"></view>
     </view>
     <view class="feather {{region == 'seat' ? 'feather-seats' : 'feather-chosen'}}">
         类型：<view class="feather-room">

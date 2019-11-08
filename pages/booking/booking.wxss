@@ -3,7 +3,7 @@ page{
     background-color:#fff;
 }
 .header{
-    background-color: #b02923;
+    background-color: #be9d6d;
     position: fixed;
     top: 0;
     left: 0;
@@ -20,7 +20,7 @@ page{
     background-color: #fff;
     border-radius: 4px;
     font-size: 28rpx;
-    color: #b02923;
+    color: #be9d6d;
     height: 52rpx;
     line-height: 52rpx;
 }
@@ -62,7 +62,7 @@ page{
     color: #999;
 }
 .feather-seats .feather-seats,.feather-chosen .feather-room,.chosen,.feather-floor.chosen{
-    background-color: #b02923;
+    background-color: #be9d6d;
     color: #fff;
     position: relative;
 }
@@ -84,7 +84,7 @@ page{
 }
 .feather-floor.choice{
     border: 1px solid #d1d1d1;
-    color: #b02923;
+    color: #be9d6d;
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
             box-sizing: border-box;
@@ -124,7 +124,7 @@ page{
     color: #999;
 }
 .region-conston .chosen{
-    background-color:#b02923;
+    background-color:#be9d6d;
     color:#fff;
     border:none;
 }
@@ -171,7 +171,7 @@ picker{
     height: 8px;
     width: 8px;
     display: block;
-    border: 1px solid #b02923;
+    border: 1px solid #be9d6d;
     border-left-width: 0;
     border-bottom-width: 0;
     position: absolute;

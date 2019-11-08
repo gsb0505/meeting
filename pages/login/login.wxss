@@ -1,11 +1,11 @@
 /* pages/login/login.wxss */
 page{
     background-color:#fff;
-    font-size:40rpx;
+    font-size:30rpx;
 }
 .login image{
-    width:80%;
-    height:100rpx;
+    width:503rpx;
+    height:88rpx;
     margin:20% auto;
     display:block;
 }
@@ -20,20 +20,20 @@ input{
             box-sizing: border-box;
 }
 .button-hover {
-    background-color: #b02923;
+    background-color: #be9d6d;
 }
 /** 添加自定义button点击态样式类**/
 .other-button-hover {
-    background-color: #b02923;
+    background-color: #be9d6d;
     color:#fff;
 }
 button{
-    background-color: #b02923;
+    background-color:#be9d6d;
     color:#fff;
     top:200rpx;
     width:80%;
 
 }
 .userError{
-    border-color:#b02923;
+    border-color:#be9d6d;
 }

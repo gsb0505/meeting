@@ -3,9 +3,11 @@
     <image src="../../images/vankelogo.png" ></image>
     <form bindsubmit="formSubmit" bindreset="formReset">
         <view class="section">
-            <input name="userName" class="{{ userName == true ? 'userError' : ''}}" type="text" maxlength="11" placeholder="真实姓名/电话" />
-            <input name="userPassword" class="{{ userPassword == true ? 'userError' : ''}}" type="text" password  maxlength="100" placeholder="请输入您的密码" />
+            <input name="userId" type="text" maxlength="11" placeholder="真实姓名/电话" />
+            <input name="loginPSW" type="text" password  maxlength="100" placeholder="请输入您的密码" />
         </view>
+         <view class="error">{{errorMsg}}</view>
+          <view class="error">{{netStatus}}</view>
         <button type="default" formType="submit" hover-class="other-button-hover"> 登录 </button>
     </form>
 </view>

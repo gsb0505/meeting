@@ -80,9 +80,10 @@ Page({
     region: 'seat',
     chosens: false,
     options: false,
-    daytime:['上午', '下午'],
-    floor:['1F', '2F', '3F'],
-    first: 0,
+    daytime: ['06:00', '06:30', '07:00', '07:30','08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00', '22:30', '23:00', '23:30'],
+    floor: ['会议室1', '会议室2', '会议室3', '会议室4', '会议室5', '会议室6'],
+    endTime: 0,
+    startTime: 0,
     num: 0,
     regionDataSeat:[],
     regionDataRoom:[],
@@ -148,14 +149,20 @@ Page({
       date: e.detail.value
     });
   },
-  bindPickerOrder: function(e) {
-    // 时间
+  bindPickerOrderStrart: function(e) {
+    // 开始暗
     this.setData({
-      first: e.detail.value
+      startTime: e.detail.value
+    });
+  },
+  bindPickerOrderEnd: function (e) {
+    // 结束时间
+    this.setData({
+      endTime: e.detail.value
     });
   },
   bindPickerFloor: function(e){
-    // 楼层
+    // 会议室
     this.setData({
       num: e.detail.value
     });

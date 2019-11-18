@@ -47,7 +47,19 @@ page{
     background-color: #fff;
     border-bottom: 1px solid #eee;
 }
+.feather_o{
+  margin-top: 0rpx;
+}
 .feather > view{
+    display: inline-block;
+    padding: 0 20rpx;
+    margin-right: 24rpx;
+    border-radius: 4px;
+    width:280px;
+    float:right;
+}
+
+.feather > text{
     display: inline-block;
     padding: 0 20rpx;
     margin-right: 24rpx;
@@ -89,10 +101,14 @@ page{
        -moz-box-sizing: border-box;
             box-sizing: border-box;
 }
-/* .feather-floor.chosen{
-    background-color: #b02923;
-    color:#fff;
-} */
+
+.feather-floor.text{
+    border: 1px solid #d1d1d1;
+    color: #be9d6d;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
 .region {
     background-color: #fff;
 }
@@ -157,6 +173,32 @@ page{
     height: 70rpx;
     line-height: 70rpx;
 }
+picker2{
+    display: inline-block;
+}
+.picker2{
+    position: relative;
+    display: inline-block;
+    padding-right:506rpx;
+    font-size:30rpx;
+    width:280px;
+}
+.picker2:before {
+    content:'';
+    height: 8px;
+    width: 8px;
+    display: block;
+    border: 1px solid #be9d6d;
+    border-left-width: 0;
+    border-bottom-width: 0;
+    position: absolute;
+    top: 6px;
+    right: 8rpx;
+    -webkit-transform: rotate(135deg);
+       -moz-transform: rotate(135deg);
+            transform: rotate(135deg);
+}
+
 picker{
     display: inline-block;
 }
@@ -183,4 +225,10 @@ picker{
 }
 .feather-floor .picker::before{
     top:24rpx;
+}
+.text{
+   display: inline-block;
+    padding: 0 20rpx;
+    margin-right: 24rpx;
+    border-radius: 4px;
 }

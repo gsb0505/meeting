@@ -10,24 +10,34 @@
 <view style="height:90rpx;"></view>
 <view class="orderContent" >
     <!-- 会议室 -->
-    <block wx:for="{{room}}" wx:key="item.id">
-        <view wx:if="{{item.complate === true}}" class="ordersRoom" >
+    <block wx:for="{{orderDetailList}}" wx:key="item.id">
+        <view wx:if="{{item.errCode == 1}}" class="ordersRoom" >
             <view class="roomLeft">
-                <text>预定时间: {{item.date}}</text>
-                <text>楼层: {{item.floor}}</text>
-                <text>会议室门号: {{item.roomNo}}</text>
+            <text>{{item.meetName}}</text>
+                <text>预定时间: {{item.meetDate}} -- {{item.meetEndTime}}  </text>
+                <text>会议室门号: {{item.meetRoomName}}</text>
+                 <text>状态: 待审核</text>
             </view>
             <view class="roomBut" hidden="{{ordersBut}}">
-                <text bindtap="defaultLogin" > 归还 </text>
-                <text bindtap="defaultLogin" > 取消 </text>
+                <text bindtap="defaultLogin" > 撤消 </text>
             </view>
         </view>
         <!-- 已完成 -->
-        <view  wx:elif="{{item.complate !== true}}" class="ordersRoom"  style="color:#999;">
+       <view wx:if="{{item.errCode == 2}}" class="ordersRoom" >
             <view class="roomLeft">
-                <text>预定时间: {{item.date}}</text>
-                <text>楼层: {{item.floor}}</text>
-                <text>会议室门号: {{item.roomNo}}</text>
+            <text>{{item.meetName}}</text>
+                <text>预定时间: {{item.meetDate}} -- {{item.meetEndTime}}  </text>
+                <text>会议室门号: {{item.meetRoomName}}</text>
+                <text>状态: 已完成</text>
+            </view>
+        </view>
+          <!-- 已撤销 -->
+       <view wx:if="{{item.errCode == 3}}" class="ordersRoom" >
+            <view class="roomLeft">
+            <text>{{item.meetName}}</text>
+                <text>预定时间: {{item.meetDate}} -- {{item.meetEndTime}}  </text>
+                <text>会议室门号: {{item.meetRoomName}}</text>
+                <text>状态: 已撤销</text>
             </view>
         </view>
     </block>

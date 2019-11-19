@@ -1,7 +1,10 @@
 <!--pages/orders/orders.wxml-->
 <view class="ordersTab">
-    <text bindtap="tabLeft" style="color:{{colLeft}};">座位</text>
-    <text bindtap="tabRight" style="color:{{colRight}};">会议室</text>
+    <text bindtap="tabRight" id = '0' style="color:{{col0}};">我的预约</text>
+    <text bindtap="tabRight" id = '1' style="color:{{col1}};">待审核</text>
+    <text bindtap="tabRight" id = '4' style="color:{{col4}};">待使用</text>
+    <text bindtap="tabRight" id = '2' style="color:{{col2}};">已完成</text>
+    <text bindtap="tabRight" id = '3' style="color:{{col3}};">已撤销</text>
     <view class="tabCalled" style="left:{{Left}}"></view>
 </view>
 <view style="height:90rpx;"></view>

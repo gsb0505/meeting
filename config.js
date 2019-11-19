@@ -3,7 +3,7 @@
  */
 
 //服务端http api 的host
-const host = 'http://127.0.0.1:8080/meetCore';
+const host = 'http://106.14.61.179:8090/meetCore';
 var config = {
   host: host,
   //服务端http api

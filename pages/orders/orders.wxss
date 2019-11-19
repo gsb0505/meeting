@@ -12,7 +12,7 @@
 }
 .ordersTab wx-text{
     text-align:center;
-    width:50%;
+    width:20%;
     display:block;
     float:left;
 

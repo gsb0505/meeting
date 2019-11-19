@@ -1,44 +1,43 @@
-/* pages/login/login.wxss */
-page{
-    background-color:#fff;
-    font-size:30rpx;
-}
-.login image{
-    width:503rpx;
-    height:88rpx;
-    margin:20% auto;
-    display:block;
-}
-input{
-    border:1px solid #ddd;
-    line-height:80rpx;
-    height:80rpx;
-    width:80%;
-    margin:5% auto;
-    padding-left:20rpx;
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-}
-.button-hover {
-    background-color: #be9d6d;
-}
-/** 添加自定义button点击态样式类**/
-.other-button-hover {
-    background-color: #be9d6d;
-    color:#fff;
-}
-button{
-    background-color:#be9d6d;
-    color:#fff;
-    top:200rpx;
-    width:80%;
-
-}
-.userError{
-    border-color:#be9d6d;
-}
-
-.error {
-  margin: 50rpx 0 50rpx 0;
-  text-align: center
+page{ 
+    background-color:#fff; 
+    font-size:30rpx; 
+} 
+.login image{ 
+    width:503rpx; 
+    height:88rpx; 
+    margin:20% auto; 
+    display:block; 
+} 
+input{ 
+    border:1px solid #ddd; 
+    line-height:80rpx; 
+    height:80rpx; 
+    width:80%; 
+    margin:5% auto; 
+    padding-left:20rpx; 
+    -webkit-box-sizing: border-box; 
+            box-sizing: border-box; 
+} 
+.button-hover { 
+    background-color: #be9d6d; 
+} 
+/** 添加自定义button点击态样式类**/ 
+.other-button-hover { 
+    background-color: #be9d6d; 
+    color:#fff; 
+} 
+button{ 
+    background-color:#be9d6d; 
+    color:#fff; 
+    top:200rpx; 
+    width:80%; 
+ 
+} 
+.userError{ 
+    border-color:#be9d6d; 
+} 
+ 
+.error { 
+  margin: 50rpx 0 50rpx 0; 
+  text-align: center 
 }

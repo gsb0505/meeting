@@ -1,7 +1,6 @@
 // pages/login/login.js
 const request = require('../../utils/request.js')
 const md5 = require('../../utils/md5.js')
-const CryptoJS = require('../../utils/aes.js')
 const app = getApp();
 Page({
   data:{

@@ -11,7 +11,7 @@ const login = (user, success, fail) => {
     data: { user: user },
     //method:'POST', //默认为 'GET'
     success(result) {
-      debugger
+     // debugger
       console.log(result)
       //JSON.stringify(result.data)
       success(result)
@@ -27,120 +27,33 @@ const login = (user, success, fail) => {
   wx.request(options)
 }
 
-const modifyPassword = (oldPassword, newPassword, success, fail) => {
+// const modifyPassword = (oldPassword, newPassword, success, fail) => {
+//   var options = {
+//     url: config.service.modifyPasswordUrl,
+//     data: {
+//       userId: getApp().globalData.userId,
+//       oldPassword: oldPassword, newPassword: newPassword
+//     },
+//     success(result) {
+//       success(result)
+//     },
+//     fail(error) {
+//       if (typeof (fail) != 'undefined') {
+//         fail(error)
+//       }
+//     }
+//   }
+//   wx.request(options)
+// }
+
+
+
+/*查询我的订单 */
+const meetList = (params, success, fail) => {
   var options = {
-    url: config.service.modifyPasswordUrl,
+    url: config.service.meetListUrl,
     data: {
-      userId: getApp().globalData.userId,
-      oldPassword: oldPassword, newPassword: newPassword
-    },
-    success(result) {
-      success(result)
-    },
-    fail(error) {
-      if (typeof (fail) != 'undefined') {
-        fail(error)
-      }
-    }
-  }
-  wx.request(options)
-}
-
-//查询已完成/未完成普查表数量
-/*
-响应：
-data	
-  completecounts
-	nocompletecount
- */
-const status = (success, fail) => {
-  var options = {
-    url: config.service.statusUrl,
-    data: {
-      userId: getApp().globalData.userId,
-      // data:{}
-    },
-    success(result) {
-      success(result)
-    },
-    fail(error) {
-      if (typeof (fail) != 'undefined') {
-        fail(error)
-      }
-    }
-  }
-  wx.request(options)
-}
-
-//普查表列表查询
-/*
-输入参数：
-status	integer	是	状态（1已完成 2未完成）
-type	String	是	普查表类型(1道路停车场 2 公共停车场 3 居住类配建 4非居住配建  5路外公共/配建（非学校）6道路/学校类)。
-支持多种类型查询，以逗号分隔。
-
-响应：
-data	
-  id
-	name
-	address
-	createTime
-	updatetime
-	type
-	locationAmap
-	photoUrl
-	createUserId
-	updateuserid
-	carNo
-	status
- */
-const list = (params, success, fail) => {
-  var options = {
-    url: config.service.listUrl,
-    data: {
-      userId: getApp().globalData.userId,
-      data: params
-    },
-    success(result) {
-      success(result)
-    },
-    fail(error) {
-      if (typeof (fail) != 'undefined') {
-        fail(error)
-      }
-    },
-  }
-  wx.request(options)
-}
-
-//普查表列表分页查询
-/*
-输入参数：
-status	integer	是	状态（1已完成 2未完成）
-type	String	是	普查表类型(1道路停车场 2 公共停车场 3 居住类配建 4非居住配建  5路外公共/配建（非学校）6道路/学校类)。
-支持多种类型查询，以逗号分隔。
-
-响应：
-data	
-  id
-	name
-	address
-	createTime
-	updatetime
-	type
-	locationAmap
-	photoUrl
-	createUserId
-	updateuserid
-	carNo
-	status
- */
-const pageList = (params, success, fail) => {
-  var options = {
-    url: config.service.pageListUrl,
-    data: {
-      userId: getApp().globalData.userId,
-      data: params
+      orderDetail: params
     },
     success(result) {
       success(result)
@@ -328,11 +241,11 @@ const streetList = (success, fail) => {
 
 module.exports = {
   login: login,
-  modifyPassword: modifyPassword,
+  //modifyPassword: modifyPassword,
 
-  status: status,
-  list: list,
-  pageList: pageList,
+ //status: status,
+ // list: list,
+  meetList: meetList,
   streetList: streetList,
   detail: detail,
   add: add,

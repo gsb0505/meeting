@@ -9,6 +9,12 @@
   </swiper>-->
   <view class="menuWrap bg-white">
     <view class="menuWrap-item">
+      <navigator class="menuWrap-item-navi" url="../booking/booking?type=seat">
+        <span class="iconfont icon-zuowei"></span>
+        <text>预约座位</text>
+      </navigator>
+    </view>
+    <view class="menuWrap-item">
       <navigator class="menuWrap-item-navi" url="../booking/booking?type=room">
         <span class="iconfont icon-huiyishi"></span>
         <text>预约会议室</text>

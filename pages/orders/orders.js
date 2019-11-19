@@ -1,10 +1,27 @@
 // pages/orders/orders.js
+const request = require('../../utils/request.js')
+const Parser = require('../../utils/dom-parser.js')
+const dom = require('../../utils/dom.js')
+const entities = require('../../utils/entities.js')
+const sax = require('../../utils/sax.js')
+var app = getApp()
+const page_size = 5;
 Page({
   data:{
     Left:'5%',
     hidden: false,
     prompt: true,
-    ordersTitle: '暂无预定座位',
+    ordersTitle: '暂无预定',
+    // 当前页
+    pageNumber: 1,
+    // 总页数
+    totalPage: 1,
+    totalResult:0,
+    seach:{
+      creator:"",
+      currentPage:"",
+      pageSize:""
+    },
     room:[{
       date:'2017-02-07 10:00-12:00',
       floor:'4F',
@@ -52,50 +69,35 @@ Page({
     getApp().auth();
     // 页面初始化 options为页面跳转所带来的参数
       this.setData({
-          ordersRoom:true,
-          ordersSeat:false,
           colLeft:'#b02923',
           borLeft:'3px solid #b02923'
       });
   },
   onShow: function(){
-      const userInfo = wx.getStorageSync('userInfo');
-      console.log(userInfo)
-      if(userInfo.length === 0){
-        this.setData({
-            hidden: true,
-            prompt: false
-        })
-      }else{
-        this.setData({
-            hidden: false,
-            prompt: true
-        })
-      }
+   
+    this.setData({
+      pageNumber: 1,
+      room: []
+    }),
+      this.queryData()
   },
-  tabLeft:function(){
-    // 点击座位
-      this.setData({
-          ordersRoom:true,
-          ordersSeat:false,
-          colLeft:'#b02923',
-          colRight:'',
-          borRight:'',
-          Left:'5%',
-          ordersTitle: '暂无预定座位'
-      });
 
+  queryData: function () {
+    const that = this
+    let userId = app.globalData.userId;
+    request.meetList({creator: userId, currentPage: this.data.pageNumber, pageSize: page_size }, function (res) {
+      debugger
+      var XMLParser = new Parser.DOMParser()
+      var curData = XMLParser.parseFromString(res.data)
+      // let curData = JSON.parse(res.data)
+      //debugger
+      let arr = curData.getElementsByTagName('orderDetails').childNodes;
+      that.setData({
+        tables: arr,
+        // totalPage: arr.totalPage,
+        // totalResult: curData.totalResult,
+        stopLoadMoreTiem: false
+      })
+    })
   },
-  tabRight:function(){
-    // 点击会议室
-      this.setData({
-          ordersRoom:false,
-          ordersSeat:true,
-          colLeft:'',
-          borLeft:'',
-          colRight:'#b02923',
-          Left:'55%',
-          ordersTitle: '暂无预定会议室'
-      });
-  }
 })

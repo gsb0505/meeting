@@ -3,6 +3,26 @@ App({
   onLaunch: function () {
 
   },
+  globalData: {
+    isLogined: false
+    , userId: null
+    , phone:null
+  },
+  auth: function () {
+    if (this.globalData.isLogined == false) {
+      wx.showModal({
+        title: '未登陆',
+        content: '请先登陆',
+        confirmText: '知道了',
+        showCancel: false,
+        success: function () {
+          wx.redirectTo({
+            url: '/pages/login/login',
+          })
+        }
+      })
+    }
+  },
   getRequest: function(url,callback){
     wx.showToast({
       title: '加载中',

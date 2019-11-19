@@ -37,3 +37,8 @@ button{
 .userError{
     border-color:#be9d6d;
 }
+
+.error {
+  margin: 50rpx 0 50rpx 0;
+  text-align: center
+}

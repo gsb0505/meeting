@@ -8,25 +8,35 @@
     <view class="tabCalled" style="left:{{Left}}"></view>
 </view>
 <view style="height:90rpx;"></view>
+<scroll-view scroll-y="{{true}}" bindscrolltolower="lower" lower-threshold="50" class="pull-down-load">
 <view class="orderContent" >
     <!-- 会议室 -->
     <block wx:for="{{orderDetailList}}" wx:key="item.id">
         <view wx:if="{{item.errCode == 1}}" class="ordersRoom" >
             <view class="roomLeft">
             <text>{{item.meetName}}</text>
-                <text>预定时间: {{item.meetDate}} -- {{item.meetEndTime}}  </text>
+                <text>预定时间: {{item.meetDate}} {{item.meetStartTime}} -- {{item.meetEndTime}}  </text>
                 <text>会议室门号: {{item.meetRoomName}}</text>
                  <text>状态: 待审核</text>
             </view>
             <view class="roomBut" hidden="{{ordersBut}}">
-                <text bindtap="defaultLogin" > 撤消 </text>
+                <text bindtap="cancelMeet" id="{{item.id}}"> 撤消 </text>
+            </view>
+        </view>
+              <!-- 待使用 -->
+       <view wx:if="{{item.errCode == 4}}" class="ordersRoom" >
+            <view class="roomLeft">
+            <text>{{item.meetName}}</text>
+                <text>预定时间: {{item.meetDate}} {{item.meetStartTime}} -- {{item.meetEndTime}}  </text>
+                <text>会议室门号: {{item.meetRoomName}}</text>
+                <text>状态: 待使用</text>
             </view>
         </view>
         <!-- 已完成 -->
        <view wx:if="{{item.errCode == 2}}" class="ordersRoom" >
             <view class="roomLeft">
             <text>{{item.meetName}}</text>
-                <text>预定时间: {{item.meetDate}} -- {{item.meetEndTime}}  </text>
+                <text>预定时间: {{item.meetDate}} {{item.meetStartTime}} -- {{item.meetEndTime}}  </text>
                 <text>会议室门号: {{item.meetRoomName}}</text>
                 <text>状态: 已完成</text>
             </view>
@@ -35,13 +45,15 @@
        <view wx:if="{{item.errCode == 3}}" class="ordersRoom" >
             <view class="roomLeft">
             <text>{{item.meetName}}</text>
-                <text>预定时间: {{item.meetDate}} -- {{item.meetEndTime}}  </text>
+                <text>预定时间: {{item.meetDate}} {{item.meetStartTime}} -- {{item.meetEndTime}}  </text>
                 <text>会议室门号: {{item.meetRoomName}}</text>
                 <text>状态: 已撤销</text>
             </view>
         </view>
     </block>
 </view>
+<view class="errCode" hidden="{{errCode}}">{{ordersTitle}}</view>
+</scroll-view>
 <view class="ordersTitle" hidden="{{prompt}}">{{ordersTitle}}</view>
 
 

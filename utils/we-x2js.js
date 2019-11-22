@@ -310,7 +310,7 @@
 					var childName = getDomNodeLocalName(child);
 
 					if (config.ignoreRoot)
-						result = deserializeDomChildren(child, childName);
+            result[childName] = deserializeDomChildren(child, childName);
 					else
 						result[childName] = deserializeDomChildren(child, childName);
 				}
@@ -338,7 +338,7 @@
 				// We deliberately do not accept everything falsey here because
 				// elements that resolve to empty string should still be preserved.
 				if (result[childName] == null) {
-					result[childName] = deserializeDomChildren(child, elementPath + "." + childName);
+					result[childName] = [deserializeDomChildren(child, elementPath + "." + childName)];
 					ensureProperArrayAccessForm(result, childName, elementPath + "." + childName);
 				} else {
 					if (!(result[childName] instanceof Array)) {
@@ -431,13 +431,14 @@
 			} else if (node.nodeType === DOMNodeTypes.ELEMENT_NODE) {
 				return deserializeElementChildren(node, parentPath);
 			} else if (node.nodeType === DOMNodeTypes.TEXT_NODE || node.nodeType === DOMNodeTypes.CDATA_SECTION_NODE) {
-				return node.nodeValue;
+      	return node.nodeValue;
 			} else {
 				return null;
 			}
 		}
 
 		function serializeStartTag(jsObject, elementName, attributeNames, selfClosing) {
+       
 			var resultStr = "<" + ((jsObject && jsObject.__prefix) ? (jsObject.__prefix + ":") : "") + elementName;
 
 			if (attributeNames) {
@@ -712,6 +713,7 @@
 
 		// Transforms a DOM tree to JavaScript objects.
 		this.dom2js = function dom2js(domNode) {
+
 			return deserializeDomChildren(domNode, null);
 		};
 
@@ -724,8 +726,10 @@
 		// Transformns an XML string into JavaScript objects.
 		this.xml2js = function xml2js(xml) {
 			var domNode = parseXml(xml);
-			if (domNode != null)
+			if (domNode != null){
+        console.log("--------------dom2js=" + this.dom2js(domNode) +"--------------");
 				return this.dom2js(domNode);
+      }
 			else
 				return null;
 		};

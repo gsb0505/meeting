@@ -2,18 +2,19 @@
 const request = require('../../utils/request.js')
 const X2JS = require('../../utils/we-x2js.js')
 var app = getApp()
-const page_size = 5;
 Page({
   data:{
     Left:'1%',
+    page_size : 5,
     hidden: false,
     prompt: true,
     ordersTitle: '暂无预定',
-    col0:'',
+    col0: '#be9d6d',
     col1:'',
     col2:'',
     col3:'',
     col4:'',
+    borLeft: '3px solid #be9d6d',
     // 当前页
     pageNumber: 1,
     // 总页数
@@ -24,26 +25,19 @@ Page({
       currentPage:"",
       pageSize:""
     },
-    
+    orderDetailList: [],
+    stopLoadMoreTiem:false,
+    errCode:null
   },
   onLoad:function(){
+    //登录验证
     // getApp().auth();
-    // 页面初始化 options为页面跳转所带来的参数
-      this.setData({
-        col0:'#be9d6d',
-        borLeft:'3px solid #be9d6d'
-      });
   },
   onShow: function(){
-   
-    this.setData({
-      pageNumber: 1,
-      orderDetailList: []
-    }),
+      //加载全部会议数据
       this.queryData(null)
   },
-
-  
+  //菜单按钮
   tabRight: function (e) {
     let id = e.currentTarget.id;
     let col0 = '';
@@ -86,26 +80,72 @@ Page({
       this.queryData(id);
     }
   } ,
+  //会议数据查询方法
   queryData: function (errCode) {
     const that = this
+    //获取userid公共变量
     let userId = app.globalData.userId;
+    let page_size = that.data.page_size;
+    debugger
+    //调用会议查询接口
     request.meetList({ creator: userId, currentPage: this.data.pageNumber, errCode: errCode, pageSize: page_size }, function (res) {
-      //debugger
+      //接口返回
       var x2js = new X2JS();
       let orderDetails = x2js.xml2js(res.data)
-      let orderDetailList = orderDetails == null || orderDetails == '' || typeof (orderDetails) == 'undefined' ? '' : orderDetails.orderDetails.orderDetail;
-      debugger
-      let totalPage = orderDetailList == null ? 1 : orderDetailList[0] == null ? orderDetailList.pageCount.totalPage : orderDetailList[0].pageCount.totalPage;
-      let totalResult = orderDetailList == null ? 0 : orderDetailList[0] == null ? orderDetailList.pageCount.totalResult : orderDetailList[0].pageCount.totalResult;
-      
+      let orderDetailList = orderDetails == null || orderDetails == '' || typeof (orderDetails) == 'undefined' ? [] : orderDetails.orderDetails.orderDetail;      
+      let totalPage = orderDetailList == null ? 1 :orderDetailList[0].pageCount.totalPage;
+      let totalResult = orderDetailList == null ? 0 : orderDetailList[0].pageCount.totalResult;
+      //给页面赋值
       that.setData({
         orderDetailList: typeof (orderDetailList) == 'undefined' ? '' :  orderDetailList,
         prompt: typeof (orderDetailList) == 'undefined' ? false:true,
         ordersTitle: '暂无预定会议室',
         totalPage: totalPage,
         totalResult: totalResult,
-        stopLoadMoreTiem: false
+        stopLoadMoreTiem: false,
+        errCode: errCode
       })
     })
+  },
+  //撤消会议按钮
+  cancelMeet:function(e){
+    let id = e.currentTarget.id;
+    console.log(id)
+  },
+  /**
+    * 滚动条加载
+    */
+  lower: function () {
+    var that = this;
+    debugger
+    if (that.stopLoadMoreTiem) {
+      return;
+    }
+    // 当前页+1
+    let pageNumber = that.data.pageNumber + 1;
+    let errCode = that.data.errCode;
+    
+    that.setData({
+      pageNumber: pageNumber,
+      stopLoadMoreTiem: false
+    })
+
+    if (pageNumber <= that.data.totalPage) {
+      wx.showLoading({
+        title: '玩命加载中',
+      })
+      this.queryData(errCode);
+      wx.hideLoading();
+    }else{
+      wx.showLoading({
+        title: '已到最后一页',
+      })
+      setTimeout(() => {
+        wx.hideLoading();
+        return
+      },1000)
+
+    }
+
   },
 })

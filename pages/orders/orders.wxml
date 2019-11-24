@@ -21,6 +21,7 @@
             </view>
             <view class="roomBut" hidden="{{ordersBut}}">
                 <text bindtap="cancelMeet" id="{{item.id}}"> 撤消 </text>
+                <text bindtap="modiMeet" id="{{item.id}}"> 修改 </text>
             </view>
         </view>
               <!-- 待使用 -->
@@ -30,6 +31,9 @@
                 <text>预定时间: {{item.meetDate}} {{item.meetStartTime}} -- {{item.meetEndTime}}  </text>
                 <text>会议室门号: {{item.meetRoomName}}</text>
                 <text>状态: 待使用</text>
+            </view>
+             <view class="roomBut" hidden="{{ordersBut}}">
+                <text bindtap="modiMeet" id="{{item.id}}"> 修改 </text>
             </view>
         </view>
         <!-- 已完成 -->

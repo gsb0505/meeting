@@ -1,30 +1,43 @@
 <!--pages/booking/booking.wxml-->
+<form bindsubmit="formSubmit" >
 <view class="container">
     <view class="header">
         <view class="header-date">
-            日期：<picker mode="date" bindchange="bindDateChange" value="{{date}}" start='{{startDate}}' end='2019-09-01'><text class="picker">{{date}}</text></picker>
+            日期：<picker mode="date" bindchange="bindDateChange" value="{{table.meetDate}}" start='{{startDate}}' name="meetDate" data-name="table.meetDate"><text class="picker">{{table.meetDate}}</text></picker>
         </view>
         <view class="header-time">
-            时间：<picker disabled="{{picker}}" bindchange="bindPickerOrderStrart" value="{{startTime}}" range="{{daytime}}"><text class="picker">{{daytime[startTime]}}</text>
-            </picker> 至 <picker disabled="{{picker}}" bindchange="bindPickerOrderEnd" value="{{endTime}}" range="{{daytime}}"><text class="picker">{{daytime[endTime]}}</text>
+            时间：<picker disabled="{{picker}}" bindchange="bindPickerOrderStrart" value="{{table.meetStartTime}}" range="{{daytime}}" name="meetStartTime"  data-name="table.meetStartTime"><text class="picker" >{{daytime[startTime]}}</text>
+            </picker> 至 <picker disabled="{{picker}}" bindchange="bindPickerOrderEnd" value="{{table.meetEndTime}}" range="{{daytime}}" name="meetEndTime" data-name="table.meetEndTime"><text class="picker">{{daytime[endTime]}}</text>
             </picker>
         </view>
     </view>
     <view class="feather">
         会议室：<view class="feather-floor choice">
-                 <picker disabled="{{picker}}" bindchange="bindPickerFloor" value="{{num}}" range="{{floor}}"><text class="picker2">{{floor[num]}}</text>
-            </picker>
+           <picker name="meetRoomID" bindchange="bindChooseRoom" value="{{roomArray[roomIndex].id}}" range="{{roomArray}}" range-key="{{'meetRoomName'}}" data-name="table.meetRoomID" >
+          <view class="picker2" >
+            {{roomArray[roomIndex].meetRoomName}}
+          </view>
+        </picker>
               </view>
     </view>
         <view class="feather feather_o" >
-        主题：<view class="feather-floor text">
-            <text class="text"></text>
+        会议主题：
+        <view class="feather-floor text">
+             <input type='text' name="meetName" value="{{table.meetName}}" bindinput="inputgetName" data-name="table.meetName" />
         </view>
     </view>
-        <view class="feather feather_o">
-        会议室：<view class="feather-floor text">
-        <text class="text"></text>
-              </view>
+    <view class="feather feather_o" style="height: 90px">
+      特别需求：
+      <view class="feather-floor text"  >
+         <textarea   cols="2"   rows="3" name="specialdemand" value="{{table.specialdemand}}" bindinput="inputgetName" data-name="table.specialdemand" />
+      </view>
     </view>
-    <button type="default" class="button-Submit" bindtap="submitBtn" data-login="{{login}}" hover-class="other-button-hover">提交预定</button>
+    <view class="feather feather_o"  style="height: 90px">
+      邮件通知：
+      <view class="feather-floor text" >
+          <textarea   cols="2"   rows="3" name="emailNotification" value="{{table.emailNotification}}" bindinput="inputgetName" data-name="table.emailNotification" />
+      </view>
+    </view>
+    <button  class="button-Submit"  data-login="{{login}}" hover-class="other-button-hover" disabled='{{isSubmit}}' formType="submit">提交预定</button>
 </view>
+</form>

@@ -35,25 +35,7 @@
 .roomBut{
     float:right;
 }
-.ordersSeat{
-    background-color: #fff;
-    padding:36rpx;
-    height:200rpx;
-    margin-bottom:30rpx;
-    border-top:1px solid #ddd;
-    border-bottom:1px solid #ddd;
 
-}
-.seatLeft{
-    float:left;
-}
-.seatLeft wx-text{
-    display:block;
-    line-height:46rpx;
-}
-.seatBut{
-    float:right;
-}
 .roomBut wx-text {
     display:block;
     box-sizing:border-box;
@@ -102,4 +84,8 @@
     margin-top: 200rpx;
     font-size:16px;
     color:#666;
+}
+
+.pull-down-load {
+    height: 95vh;
 }

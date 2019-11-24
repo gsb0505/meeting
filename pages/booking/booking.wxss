@@ -42,7 +42,7 @@ page{
 .feather{
     padding: 20rpx;
     margin-top: 88rpx;
-    line-height: 80rpx;
+    line-height: 70rpx;
     font-size: 28rpx;
     background-color: #fff;
     border-bottom: 1px solid #eee;
@@ -55,7 +55,7 @@ page{
     padding: 0 20rpx;
     margin-right: 24rpx;
     border-radius: 4px;
-    width:280px;
+    width:220px;
     float:right;
 }
 
@@ -64,21 +64,24 @@ page{
     padding: 0 20rpx;
     margin-right: 24rpx;
     border-radius: 4px;
+    width:200px;
+    line-height: 80px
 }
 .feather image{
    width: 36rpx;
    height: 36rpx;
+    float:right;
 }
 .feather-seats .feather-room,.feather-chosen .feather-seats,.barred{
     background-color: #c6c6c6;
     color: #999;
 }
-.feather-seats .feather-seats,.feather-chosen .feather-room,.chosen,.feather-floor.chosen{
+.feather-floor.chosen{
     background-color: #be9d6d;
     color: #fff;
     position: relative;
 }
-.chosen:after,.feather-seats .feather-seats:after,.feather-chosen .feather-room:after{
+.chosen:after:after{
     content: '';
     background-image: url('./../../images/icon/ico_gouxuan.png');
     background-size: 100%;
@@ -106,8 +109,8 @@ page{
     border: 1px solid #d1d1d1;
     color: #be9d6d;
     -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 .region {
     background-color: #fff;
@@ -161,6 +164,8 @@ page{
 }
 .button-Submit{
     margin: 70rpx auto;
+    background-color:#be9d6d;
+    color:#fff;
 }
 /* 会议室 */
 .region-room .region-conston> view{
@@ -179,9 +184,9 @@ picker2{
 .picker2{
     position: relative;
     display: inline-block;
-    padding-right:506rpx;
+    padding-right:206rpx;
     font-size:30rpx;
-    width:280px;
+    width:200px;
 }
 .picker2:before {
     content:'';
@@ -192,7 +197,7 @@ picker2{
     border-left-width: 0;
     border-bottom-width: 0;
     position: absolute;
-    top: 6px;
+    top: 8px;
     right: 8rpx;
     -webkit-transform: rotate(135deg);
        -moz-transform: rotate(135deg);
@@ -217,7 +222,7 @@ picker{
     border-left-width: 0;
     border-bottom-width: 0;
     position: absolute;
-    top: 6px;
+    top: 3px;
     right: 8rpx;
     -webkit-transform: rotate(135deg);
        -moz-transform: rotate(135deg);
@@ -231,4 +236,12 @@ picker{
     padding: 0 20rpx;
     margin-right: 24rpx;
     border-radius: 4px;
+}
+input{ 
+  height: 30px;
+  font-size: 16px;
+}
+
+textarea{
+  height: 70px;font-size: 16px;
 }

@@ -20,18 +20,13 @@ Page({
     // 总页数
     totalPage: 1,
     totalResult:0,
-    seach:{
-      creator:"",
-      currentPage:"",
-      pageSize:""
-    },
     orderDetailList: [],
     stopLoadMoreTiem:false,
     errCode:null
   },
   onLoad:function(){
     //登录验证
-    // getApp().auth();
+     getApp().auth();
   },
   onShow: function(){
       //加载全部会议数据
@@ -63,7 +58,7 @@ Page({
       left = '41%';
     } 
 
-    // 点击会议室 
+    // 选择会议类型
     this.setData({
       col0: col0,
       col1: col1,
@@ -86,20 +81,22 @@ Page({
     //获取userid公共变量
     let userId = app.globalData.userId;
     let page_size = that.data.page_size;
-    debugger
+    // debugger
     //调用会议查询接口
-    request.meetList({ creator: userId, currentPage: this.data.pageNumber, errCode: errCode, pageSize: page_size }, function (res) {
+    request.meetList({
+      creator: userId, errCode: errCode, pageCount: { currentPage: this.data.pageNumber, showCount: page_size} }, function (res) {
       //接口返回
       var x2js = new X2JS();
       let orderDetails = x2js.xml2js(res.data)
-      let orderDetailList = orderDetails == null || orderDetails == '' || typeof (orderDetails) == 'undefined' ? [] : orderDetails.orderDetails.orderDetail;      
-      let totalPage = orderDetailList == null ? 1 :orderDetailList[0].pageCount.totalPage;
-      let totalResult = orderDetailList == null ? 0 : orderDetailList[0].pageCount.totalResult;
+      let orderDetailList = orderDetails == null || orderDetails == '' || typeof (orderDetails) == 'undefined' ? [] : orderDetails.orderDetails.orderDetail;
+      // debugger      
+      let totalPage = orderDetailList == null ? 1 :orderDetailList[0].pageCount[0].totalPage;
+        let totalResult = orderDetailList == null ? 0 : orderDetailList[0].pageCount[0].totalResult;
       //给页面赋值
       that.setData({
-        orderDetailList: typeof (orderDetailList) == 'undefined' ? '' :  orderDetailList,
+        orderDetailList: that.data.orderDetailList.concat(orderDetailList),
         prompt: typeof (orderDetailList) == 'undefined' ? false:true,
-        ordersTitle: '暂无预定会议室',
+        ordersTitle: orderDetailList == null ? '暂无预定会议室':"",
         totalPage: totalPage,
         totalResult: totalResult,
         stopLoadMoreTiem: false,
@@ -117,8 +114,8 @@ Page({
     */
   lower: function () {
     var that = this;
-    debugger
-    if (that.stopLoadMoreTiem) {
+    // debugger
+    if (that.data.stopLoadMoreTiem) {
       return;
     }
     // 当前页+1

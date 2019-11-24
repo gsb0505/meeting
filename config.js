@@ -14,7 +14,13 @@ var config = {
     //modifyPasswordUrl: `${host}/user/updatePassWord`,
 
     //我的预定
-    meetListUrl: `${host}/orderDetail/query`
+    meetListUrl: `${host}/orderDetail/query`,
+
+    //会议室查询
+    roomListUrl: `${host}/meetRoom/query`,
+     //全部会议室查询
+    roomAllUrl: `${host}/meetRoom/queryList`,
+    roomOrderAddUrl: `${host}/orderDetail/add`,
   },
 
   //硬编码的词典

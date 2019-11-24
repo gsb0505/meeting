@@ -23,6 +23,17 @@ App({
       })
     }
   },
+  //检查网络是否连接
+  checkNetStatus: function (callback) {
+    wx.getNetworkType({
+      success(res) {
+        if (typeof (callback) == 'function') {
+          const networkType = res.networkType
+          callback(networkType == 'none' ? '网络错误，请检查网络' : '')
+        }
+      }
+    })
+  },
   getRequest: function(url,callback){
     wx.showToast({
       title: '加载中',

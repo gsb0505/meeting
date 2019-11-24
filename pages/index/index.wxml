@@ -1,17 +1,47 @@
 <!--index.wxml-->
 <view class="container">
-<!--  <swiper indicator-dots="true" autoplay="true" interval="3000" duration="800" class="swiper-banner bg-white">
-    <block wx:for="{{banners}}" wx:key="item.id">
-      <swiper-item>
-        <image src="{{item}}" mode="scaleToFill" style="width:100%;height:400rpx;"></image>
-      </swiper-item>
+<scroll-view scroll-y="{{true}}" bindscrolltolower="lower" lower-threshold="50" class="pull-down-load">
+  <view class="roomContent" >
+    <!-- 会议室 -->
+     <block wx:for="{{roomList}}" wx:key="item.id"> 
+     <view style=" padding-left: 10px;">
+       <image src="../../images/userhead.jpg" style="width:68px;height:68px;border:1px solid #ddd;float:left;margin:20rpx 20rpx;border-radius: 50%;"></image>
+       </view>
+       <!--会议室空闲-->
+        <view wx:if="{{item.currentMeet =='空闲'}}" class="ordersRoom" >
+            <view class="roomLeft">
+            <text class="roomText">{{item.meetRoomName}}</text>
+                <text>当前 {{item.currentMeet}}</text>
+                <text>服务: {{item.specialdemand}}</text>
+                 <!-- <text>负责人: {{item.person}}</text> -->
+            </view>
+        </view>
+              <!-- 下一个会议 -->
+       <view wx:if="{{item.currentMeet ==''}}" class="ordersRoom" >
+            <view class="roomLeft">
+            <text class="roomText">{{item.meetRoomName}}</text>
+                <text>下一会议: {{item.nextMeet}}</text>
+                <text>服务: {{item.specialdemand}}</text>
+                 <!-- <text>负责人: {{item.person}}</text> -->
+            </view>
+        </view>
+        <!-- 当前 -->
+       <view wx:if="{{item.currentMeet !='' && item.currentMeet !='空闲' }}" class="ordersRoom" >
+            <view class="roomLeft">
+            <text class="roomText">{{item.meetRoomName}}</text>
+                <text>会议: {{item.currentMeet}}</text>
+                <text>服务: {{item.specialdemand}}</text>
+                 <!-- <text>负责人: {{item.person}}</text> -->
+            </view>
+        </view>
     </block>
-  </swiper>-->
+</view>
+</scroll-view>
   <view class="menuWrap bg-white">
     <view class="menuWrap-item">
       <navigator class="menuWrap-item-navi" url="../booking/booking?type=room">
-        <span class="iconfont icon-huiyishi"></span>
-        <text>预约会议室</text>
+        <span class="iconfont icon-huiyishi" style="height:16px;width:16px"></span>
+        <text class="roomButx">预约会议室</text>
       </navigator>
     </view>
   </view>

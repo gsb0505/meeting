@@ -26,7 +26,7 @@ Page({
   },
   onLoad:function(){
     //登录验证
-     getApp().auth();
+    //  getApp().auth();
   },
   onShow: function(){
       //加载全部会议数据

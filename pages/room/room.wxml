@@ -23,7 +23,7 @@
  </swiper>
 </view>
 <!-- 日历 -->
-<view style="height:90rpx;"></view>
+<view style="height:30rpx;"></view>
 
 <scroll-view scroll-y="{{true}}" bindscrolltolower="lower" lower-threshold="50" class="pull-down-load">
 <view class="orderContent" >

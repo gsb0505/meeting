@@ -20,6 +20,7 @@ Page(Object.assign({
     isSubmit:false,
     checkSubmit:false,
     table: {
+      id:'',
       meetDate:'',
       meetStartTime: '06:00',
       meetEndTime: '06:00',
@@ -32,10 +33,39 @@ Page(Object.assign({
   onLoad:function(options){
     // getApp().auth();
     // 页面初始化 options为页面跳转所带来的参数
+   
     this.setData({
-      'table.meetDate':util.formatTime(new Date)
+      'table.meetDate':util.formatTime(new Date),
+      'table.id': options.id
     });
     this.queryRoomData();
+    if (options.id){
+       console.log("dd=" + options.id)
+      let id = options.id;
+      this.queryData(id);
+    }
+    
+  },
+  //会议数据查询方法
+  queryData: function (id) {
+    let ids = id
+    const that = this
+    //调用会议查询接口
+    request.meetDetailList({
+      id: ids
+    }, function (res) {
+      // debugger
+      //接口返回
+      var x2js = new X2JS();
+
+      let orderDetails = x2js.xml2js(res.data)
+      // debugger
+      let orderDetail = orderDetails == null || orderDetails == '' || typeof (orderDetails) == 'undefined' ? [] : orderDetails.orderDetail;
+      //给页面赋值
+      that.setData({
+        table: orderDetail
+      })
+    })
   },
 
   //会议室查询方法

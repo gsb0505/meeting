@@ -20,6 +20,10 @@ Page({
     // getApp().auth();
   },
   onShow:function(){
+    this.setData({
+      roomList: [],
+      pageNumber:1
+    });
     this.queryData();
   },
 
@@ -118,4 +122,11 @@ Page({
     }
 
   },
+  itemClick:function(e){
+    getApp().globalData.meetRoomID = e.currentTarget.id;
+    console.log(getApp().globalData.meetRoomID);
+    wx.navigateTo({
+      url: '/pages/room/room'
+    });
+  }
 })

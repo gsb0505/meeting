@@ -3,6 +3,7 @@ const utils = require('../../utils/utils.js')
 const request = require('../../utils/request.js')
 const util = require('../../utils/util.js')
 const X2JS = require('../../utils/we-x2js.js')
+const page_size = 5
 Component({
   /**
   * 组件的属性列表
@@ -28,8 +29,8 @@ Component({
     totalPage: 1,
     totalResult: 0,
     orderDetailList: [],
-    stopLoadMoreTiem: false,
-    errCode: null
+    meetRoomID:0
+    
   },
   ready: function () {
     var that = this;
@@ -41,7 +42,6 @@ Component({
     that.initDate(-5, 2, d); // 日历组件程序 -4左表示过去4周 右1表示过去一周
     
   },
- 
   /**
   * 组件的方法列表
   */
@@ -72,14 +72,11 @@ Component({
     */
     lower: function () {
       var that = this;
-      // debugger
       if (that.data.stopLoadMoreTiem) {
         return;
       }
       // 当前页+1
       let pageNumber = that.data.pageNumber + 1;
-      let errCode = that.data.errCode;
-
       that.setData({
         pageNumber: pageNumber,
         stopLoadMoreTiem: false
@@ -107,14 +104,13 @@ Component({
     queryData: function (cDate) {
       const that = this
       //获取userid公共变量
-      let userId = app.globalData.userId;
-      // debugger
-
+      let meetRoomID = app.globalData.meetRoomID;
+      console.log(meetRoomID)
       //调用会议查询接口
       request.meetList({
-        creator: userId, errCode: errCode, pageCount: { currentPage: this.data.pageNumber, showCount: page_size }
+          meetRoomID: meetRoomID, meetDate: cDate, pageCount: { currentPage: this.data.pageNumber, showCount: page_size }
       }, function (res) {
-        debugger
+        // debugger
         //接口返回
         var x2js = new X2JS();
         let orderDetails = x2js.xml2js(res.data)
@@ -122,6 +118,7 @@ Component({
         // debugger      
         let totalPage = orderDetailList == null ? 1 : orderDetailList[0].pageCount[0].totalPage;
         let totalResult = orderDetailList == null ? 0 : orderDetailList[0].pageCount[0].totalResult;
+        console.log(totalPage + "----" + totalResult);
         //给页面赋值
         that.setData({
           orderDetailList: that.data.orderDetailList.concat(orderDetailList),
@@ -129,8 +126,7 @@ Component({
           ordersTitle: orderDetailList == null ? '暂无预定会议室' : "",
           totalPage: totalPage,
           totalResult: totalResult,
-          stopLoadMoreTiem: false,
-          errCode: errCode
+          stopLoadMoreTiem: false
         })
       })
     },
@@ -153,6 +149,7 @@ Component({
         dateYear: year + '年',
         dateCurrentStr: year + "-" + month + "-" + day,
       });
+      
     },
     // 获取这周从周日到周六的日期
     calculateDate(_date) {
@@ -276,8 +273,13 @@ Component({
     chooseDate(e) {
       var str = e.currentTarget.id;
       // console.log(str);
-      this.setData({ dateCurrentStr: str });
-      this.triggerEvent('mydata', { data: str })
+      this.setData({ 
+        dateCurrentStr: str ,
+        orderDetailList:[]
+      });
+      this.triggerEvent('mydata', { data: str });
+      console.log(str);
+      this.queryData(str);
     },
     
   },

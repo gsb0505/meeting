@@ -102,6 +102,27 @@ const roomAllList = (success, fail) => {
   wx.request(options)
 }
 
+/*查询会议预约*/
+const meetDetailList = (params,success,fail) =>{
+  // debugger
+  var options = {
+    url: config.service.meetDetailListUrl,
+    data: {
+      orderDetail: params
+    },
+    method: 'GET',
+    success(result) {
+      success(result)
+    },
+    fail(error) {
+      if (typeof (fail) != 'undefined') {
+        fail(error)
+      }
+    },
+  }
+  wx.request(options)
+}
+
 /*添加会议预约 */
 const roomOrderAdd = (params,success, fail) => {
   var options = {
@@ -182,5 +203,6 @@ module.exports = {
   roomOrderAdd: roomOrderAdd,
   //编辑车辆记录
   // updateRecord: updateRecord,
-  uploadPhoto: uploadPhoto
+  uploadPhoto: uploadPhoto,
+  meetDetailList: meetDetailList
 }

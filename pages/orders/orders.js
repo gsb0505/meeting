@@ -145,4 +145,11 @@ Page({
     }
 
   },
+  modiMeet:function(e){
+    const id = e.currentTarget.id
+    console.log(id);
+    wx.navigateTo({
+      url: '/pages/booking/booking?id='+id
+    });
+  }
 })

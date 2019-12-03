@@ -1,12 +1,13 @@
 {
    
   "pages": [
+    "pages/orders/orders",
+    "pages/index/index",
     "pages/room/room",
     "pages/booking/booking",
-    "pages/orders/orders",
-    "pages/booking-detail/booking-detail",
-    "pages/index/index",
    
+    "pages/booking-detail/booking-detail",
+    
     
     
     "pages/login/login",

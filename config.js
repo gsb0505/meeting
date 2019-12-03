@@ -15,6 +15,7 @@ var config = {
 
     //我的预定
     meetListUrl: `${host}/orderDetail/query`,
+    meetDetailListUrl: `${host}/orderDetail/getModel`,
 
     //会议室查询
     roomListUrl: `${host}/meetRoom/query`,

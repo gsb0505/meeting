@@ -1,0 +1,78 @@
+<!--components/calendarWeek/index.wxml-->
+<!-- 日历 -->
+<view class="date-choose shrink border-bottom10">
+ <picker mode="date" bindchange="tiaotime"><view class="data-month">{{dateYear}}{{dateMonth}}</view></picker>
+ <swiper class="date-choose-swiper" circular="true" indicator-dots="{{false}}" current="{{swiperCurrent}}" bindchange="dateSwiperChange">
+ <block wx:for="{{dateList}}" wx:for-item="date" wx:key="date.id">
+ <swiper-item class="swiper-item">
+ <view class="weekday">
+ <block wx:for-item="weekday" wx:for="{{dateListArray}}" wx:key="{{index}}">
+ <text class="week">{{weekday}}</text>
+ </block>
+ </view>
+ <view class="dateday">
+ <block wx:for="{{date.days}}" wx:for-item="day" wx:key="{{day.id}}">
+ <!-- <view>{{day.ids}}</view> -->
+ <view class="day" id="{{day.id}}" bindtap="chooseDate" >
+ <text class="{{dateCurrentStr==day.id?'active':''}}{{today==day.id?' reds':''}}" >{{day.day}}</text>
+ </view>
+ </block>
+ </view>
+ </swiper-item>
+ </block>
+ </swiper>
+</view>
+<!-- 日历 -->
+<view style="height:30rpx;"></view>
+
+<scroll-view scroll-y="{{true}}" bindscrolltolower="lower" lower-threshold="50" class="pull-down-load">
+<view class="orderContent" >
+    <!-- 会议室 -->
+    <block wx:for="{{orderDetailList}}" wx:key="item.id">
+        <view wx:if="{{item.errCode == 1}}" class="ordersRoom" >
+            <view class="roomLeft">
+            <text>{{item.meetName}}</text>
+                <text>预定时间: {{item.meetDate}} {{item.meetStartTime}} -- {{item.meetEndTime}}  </text>
+                <text>会议室门号: {{item.meetRoomName}}</text>
+                 <text>状态: 待审核</text>
+            </view>
+            <view class="roomBut" hidden="{{ordersBut}}">
+                <text bindtap="cancelMeet" id="{{item.id}}"> 撤消 </text>
+                <text bindtap="modiMeet" id="{{item.id}}"> 修改 </text>
+            </view>
+        </view>
+              <!-- 待使用 -->
+       <view wx:if="{{item.errCode == 4}}" class="ordersRoom" >
+            <view class="roomLeft">
+            <text>{{item.meetName}}</text>
+                <text>预定时间: {{item.meetDate}} {{item.meetStartTime}} -- {{item.meetEndTime}}  </text>
+                <text>会议室门号: {{item.meetRoomName}}</text>
+                <text>状态: 待使用</text>
+            </view>
+             <view class="roomBut" hidden="{{ordersBut}}">
+                <text bindtap="modiMeet" id="{{item.id}}"> 修改 </text>
+            </view>
+        </view>
+        <!-- 已完成 -->
+       <view wx:if="{{item.errCode == 2}}" class="ordersRoom" >
+            <view class="roomLeft">
+            <text>{{item.meetName}}</text>
+                <text>预定时间: {{item.meetDate}} {{item.meetStartTime}} -- {{item.meetEndTime}}  </text>
+                <text>会议室门号: {{item.meetRoomName}}</text>
+                <text>状态: 已完成</text>
+            </view>
+        </view>
+          <!-- 已撤销 -->
+       <view wx:if="{{item.errCode == 3}}" class="ordersRoom" >
+            <view class="roomLeft">
+            <text>{{item.meetName}}</text>
+                <text>预定时间: {{item.meetDate}} {{item.meetStartTime}} -- {{item.meetEndTime}}  </text>
+                <text>会议室门号: {{item.meetRoomName}}</text>
+                <text>状态: 已撤销</text>
+            </view>
+        </view>
+    </block>
+</view>
+<view class="errCode" hidden="{{errCode}}">{{ordersTitle}}</view>
+</scroll-view>
+<view class="ordersTitle" hidden="{{prompt}}">{{ordersTitle}}</view>

@@ -26,7 +26,7 @@ Page({
   },
   onLoad:function(){
     //登录验证
-     getApp().auth();
+    //  getApp().auth();
   },
   onShow: function(){
       //加载全部会议数据
@@ -145,4 +145,11 @@ Page({
     }
 
   },
+  modiMeet:function(e){
+    const id = e.currentTarget.id
+    console.log(id);
+    wx.navigateTo({
+      url: '/pages/booking/booking?id='+id
+    });
+  }
 })

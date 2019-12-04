@@ -1,16 +1,25 @@
 {
   "pages": [
     "pages/orders/orders",
+
+    "pages/index/index",
+    "pages/room/room",
     "pages/booking/booking",
+   
     "pages/booking-detail/booking-detail",
     "pages/index/index",
+    
+    
+
     "pages/login/login",
+    "pages/article/article",
     "pages/personal/personal",
     "pages/sitting/sitting",
     "pages/scanning/scanning",
     "pages/conference/conference",
-    "pages/article/article",
     "pages/product/categoryListCell"
+    "pages/conference/conference"
+    
   ],
   "tabBar": {
     "selectedColor": "#be9d6d",

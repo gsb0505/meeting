@@ -4,9 +4,10 @@ App({
 
   },
   globalData: {
-    isLogined: false
-    , userId: null
-    , phone:null
+    isLogined: false,
+    userId: null, 
+    phone:null,
+    meetRoomID:null
   },
   auth: function () {
     if (this.globalData.isLogined == false) {

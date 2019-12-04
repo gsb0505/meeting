@@ -7,7 +7,6 @@
     "pages/booking/booking",
    
     "pages/booking-detail/booking-detail",
-    "pages/index/index",
     
     
 
@@ -16,8 +15,6 @@
     "pages/personal/personal",
     "pages/sitting/sitting",
     "pages/scanning/scanning",
-    "pages/conference/conference",
-    "pages/product/categoryListCell"
     "pages/conference/conference"
     
   ],

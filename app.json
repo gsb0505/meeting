@@ -1,18 +1,16 @@
 {
-   
   "pages": [
-        "pages/orders/orders",
+    "pages/orders/orders",
     "pages/booking/booking",
     "pages/booking-detail/booking-detail",
-    
     "pages/index/index",
-
     "pages/login/login",
     "pages/personal/personal",
     "pages/sitting/sitting",
     "pages/scanning/scanning",
     "pages/conference/conference",
-    "pages/article/article"
+    "pages/article/article",
+    "pages/product/categoryListCell"
   ],
   "tabBar": {
     "selectedColor": "#be9d6d",

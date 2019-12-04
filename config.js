@@ -2,8 +2,8 @@
  * 小程序配置文件
  */
 
-//服务端http api 的host
-const host = 'http://106.14.61.179:8090/meetCore';
+//服务端http api 的host http://106.14.61.179:8090/meetCore
+const host = 'http://127.0.0.1:8082/meetCore';
 var config = {
   host: host,
   //服务端http api
@@ -21,6 +21,8 @@ var config = {
      //全部会议室查询
     roomAllUrl: `${host}/meetRoom/queryList`,
     roomOrderAddUrl: `${host}/orderDetail/add`,
+    //商品列表查询
+    goodsListUrl: `${host}/goodsInfo/query`,
   },
 
   //硬编码的词典

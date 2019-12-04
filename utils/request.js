@@ -125,7 +125,27 @@ const roomOrderAdd = (params,success, fail) => {
   wx.request(options)
 }
 
-
+/*查询商品列表 */
+const goodsList = (params, success, fail) => {
+  var options = {
+    url: config.service.goodsListUrl,
+    data: JSON.stringify(params),
+    method: 'POST',
+    contentType: 'application/json',
+    // header: {
+    //   "Content-Type": "application/json"
+    // },
+    success(result) {
+      success(result)
+    },
+    fail(error) {
+      if (typeof (fail) != 'undefined') {
+        fail(error)
+      }
+    },
+  }
+  wx.request(options)
+}
 
 // 上传图片
 const uploadPhoto = (data, success, fail) => {
@@ -180,6 +200,7 @@ module.exports = {
   roomList: roomList,
   roomAllList: roomAllList,
   roomOrderAdd: roomOrderAdd,
+  goodsList: goodsList,
   //编辑车辆记录
   // updateRecord: updateRecord,
   uploadPhoto: uploadPhoto

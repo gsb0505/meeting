@@ -1,43 +1,103 @@
 <!--pages/booking/booking.wxml-->
-<form bindsubmit="formSubmit" >
-<view class="container">
+<import src="../product/categoryListCell.wxml" />
+
+<form bindsubmit="formSubmit">
+  <!-- 商品列表容器 begin -->
+  <view class="productPlan" hidden="{{hiddenPlan}}">
+    <!-- <view class="tit_seabox">
+      <icon type='search' size="32rpx"></icon>
+      <input type='text' name="meetName" value="{{table.meetName}}" bindinput="inputgetName" data-name="table.meetName" placeholder="请搜索商品..." bindfocus="searchFocus" style="background-color:#f2f2f2;"/>
+      <icon bindtap='activity_clear' wx:if="{{searchflag}}" type='clear' size="28rpx" ></icon>
+    </view> -->
+    <view>
+      <SearchBar id="SearchBar" addflag="{{addflag}}" addimg="{{addimg}}" bind:addhandle="addhandle" searchstr="{{searchstr}}" bind:searchList="searchList" bind:endsearchList="endsearchList" bind:cancelsearch="cancelsearch" bind:activity_clear="activity_clear">
+      </SearchBar>
+      <view class='containerItem'>
+        <view style="height:40rpx;"></view>
+        <scroll-view scroll-y="{{true}}" bindscrolltolower="lower" lower-threshold="50" class="pull-down-load">
+          <view class="productContent">
+            <!-- 商品列表-->
+            <block wx:for="{{goodsList}}" wx:key="item.id" wx:for-item="item">
+              <view class="goodsItem" data-id="{{item.id}}">
+                <view class="goodLeft">
+                  <image src="../../images/userhead.jpg"></image>
+                  <text>{{item.goodsName}}</text>
+                  <text>商家: {{item.storeCode}} </text>
+                  <text>销量: {{item.orderNum}}</text>
+                  <text>剩余: {{item.count}}</text>
+                </view>
+                <view class="goodBut" hidden="{{ordersBut}}">
+                  <!-- 主容器 -->
+                  <view class="stepper" data-index="{{i}}">
+                    <!-- 减号 -->
+                    <text class="{{minusStatus}}" bindtap="bindMinus">-</text>
+                    <!-- 数值 -->
+                    <input type="number" bindchange="bindManual" value="{{pnumber}}" name="num" data-name="table.goodsDetailList.num" readonly/>
+                    <!-- 加号 -->
+                    <text class="normal" bindtap="bindPlus">+</text>
+                  </view>
+                </view>
+              </view>
+            </block>
+          </view>
+        </scroll-view>
+        <view class="goodsTitle" hidden="{{prompt}}">{{ordersTitle}}</view>
+      </view>
+    </view>
+  </view>
+  <!-- 商品列表容器 end -->
+  <view class="container">
     <view class="header">
-        <view class="header-date">
-            日期：<picker mode="date" bindchange="bindDateChange" value="{{table.meetDate}}" start='{{startDate}}' name="meetDate" data-name="table.meetDate"><text class="picker">{{table.meetDate}}</text></picker>
-        </view>
-        <view class="header-time">
-            时间：<picker disabled="{{picker}}" bindchange="bindPickerOrderStrart" value="{{table.meetStartTime}}" range="{{daytime}}" name="meetStartTime"  data-name="table.meetStartTime"><text class="picker" >{{daytime[startTime]}}</text>
-            </picker> 至 <picker disabled="{{picker}}" bindchange="bindPickerOrderEnd" value="{{table.meetEndTime}}" range="{{daytime}}" name="meetEndTime" data-name="table.meetEndTime"><text class="picker">{{daytime[endTime]}}</text>
-            </picker>
-        </view>
+      <view class="header-date">
+        日期：
+        <picker mode="date" bindchange="bindDateChange" value="{{table.meetDate}}" start='{{startDate}}' name="meetDate" data-name="table.meetDate">
+          <text class="picker">{{table.meetDate}}</text>
+        </picker>
+      </view>
+      <view class="header-time">
+        时间：
+        <picker disabled="{{picker}}" bindchange="bindPickerOrderStrart" value="{{table.meetStartTime}}" range="{{daytime}}" name="meetStartTime" data-name="table.meetStartTime">
+          <text class="picker">{{daytime[startTime]}}</text>
+        </picker> 至
+        <picker disabled="{{picker}}" bindchange="bindPickerOrderEnd" value="{{table.meetEndTime}}" range="{{daytime}}" name="meetEndTime" data-name="table.meetEndTime">
+          <text class="picker">{{daytime[endTime]}}</text>
+        </picker>
+      </view>
     </view>
     <view class="feather">
-        会议室：<view class="feather-floor choice">
-           <picker name="meetRoomID" bindchange="bindChooseRoom" value="{{roomArray[roomIndex].id}}" range="{{roomArray}}" range-key="{{'meetRoomName'}}" data-name="table.meetRoomID" >
-          <view class="picker2" >
+      会议室：
+      <view class="feather-floor choice">
+        <picker name="meetRoomID" bindchange="bindChooseRoom" value="{{roomArray[roomIndex].id}}" range="{{roomArray}}" range-key="{{'meetRoomName'}}" data-name="table.meetRoomID">
+          <view class="picker2">
             {{roomArray[roomIndex].meetRoomName}}
           </view>
         </picker>
-              </view>
+      </view>
     </view>
-        <view class="feather feather_o" >
-        会议主题：
-        <view class="feather-floor text">
-             <input type='text' name="meetName" value="{{table.meetName}}" bindinput="inputgetName" data-name="table.meetName" />
-        </view>
+    <view class="feather feather_o">
+      会议主题：
+      <view class="feather-floor text">
+        <input type='text' name="meetName" value="{{table.meetName}}" bindinput="inputgetName" data-name="table.meetName" />
+      </view>
+    </view>
+    <view class="feather feather_o">
+      预订商品：
+      <view class="feather-floor text">
+        <input type='text' name="meetName" value="{{table.meetName}}" bindinput="inputgetName" data-name="table.meetName" placeholder="{{searchTitle}}" bindfocus="openSearchFocus" />
+      </view>
     </view>
     <view class="feather feather_o" style="height: 90px">
       特别需求：
-      <view class="feather-floor text"  >
-         <textarea   cols="2"   rows="3" name="specialdemand" value="{{table.specialdemand}}" bindinput="inputgetName" data-name="table.specialdemand" />
+      <view class="feather-floor text">
+        <textarea cols="2" rows="3" name="specialdemand" value="{{table.specialdemand}}" bindinput="inputgetName" data-name="table.specialdemand" />
       </view>
     </view>
-    <view class="feather feather_o"  style="height: 90px">
+    <view class="feather feather_o" style="height: 90px">
       邮件通知：
-      <view class="feather-floor text" >
-          <textarea   cols="2"   rows="3" name="emailNotification" value="{{table.emailNotification}}" bindinput="inputgetName" data-name="table.emailNotification" />
+      <view class="feather-floor text">
+        <textarea cols="2" rows="3" name="emailNotification" value="{{table.emailNotification}}" bindinput="inputgetName" data-name="table.emailNotification" />
       </view>
     </view>
-    <button  class="button-Submit"  data-login="{{login}}" hover-class="other-button-hover" disabled='{{isSubmit}}' formType="submit">提交预定</button>
-</view>
+    <button class="button-Submit" data-login="{{login}}" hover-class="other-button-hover" disabled='{{isSubmit}}' formType="submit">提交预定</button>
+  </view>
 </form>

@@ -1,5 +1,6 @@
 {
   "usingComponents": {
     "SearchBar": "/components/searchBox/index"
-  }
+  },
+  "navigationBarTitleText": "商品列表"
 }

@@ -1,14 +1,8 @@
 <!--pages/booking/booking.wxml-->
-<import src="../product/categoryListCell.wxml" />
 
 <form bindsubmit="formSubmit">
   <!-- 商品列表容器 begin -->
   <view class="productPlan" hidden="{{hiddenPlan}}">
-    <!-- <view class="tit_seabox">
-      <icon type='search' size="32rpx"></icon>
-      <input type='text' name="meetName" value="{{table.meetName}}" bindinput="inputgetName" data-name="table.meetName" placeholder="请搜索商品..." bindfocus="searchFocus" style="background-color:#f2f2f2;"/>
-      <icon bindtap='activity_clear' wx:if="{{searchflag}}" type='clear' size="28rpx" ></icon>
-    </view> -->
     <view>
       <SearchBar id="SearchBar" addflag="{{addflag}}" addimg="{{addimg}}" bind:addhandle="addhandle" searchstr="{{searchstr}}" bind:searchList="searchList" bind:endsearchList="endsearchList" bind:cancelsearch="cancelsearch" bind:activity_clear="activity_clear">
       </SearchBar>
@@ -17,31 +11,32 @@
         <scroll-view scroll-y="{{true}}" bindscrolltolower="lower" lower-threshold="50" class="pull-down-load">
           <view class="productContent">
             <!-- 商品列表-->
-            <block wx:for="{{goodsList}}" wx:key="item.id" wx:for-item="item">
+            <block wx:for="{{goodsList}}" wx:key="{{item.id}}" wx:for-item="item">
               <view class="goodsItem" data-id="{{item.id}}">
                 <view class="goodLeft">
                   <image src="../../images/userhead.jpg"></image>
-                  <text>{{item.goodsName}}</text>
+                  <text class="pro-title">{{item.goodsName}}</text>
                   <text>商家: {{item.storeCode}} </text>
-                  <text>销量: {{item.orderNum}}</text>
-                  <text>剩余: {{item.count}}</text>
+                  <text>价格: {{item.price}}</text>
+                  <text>销量: {{item.orderNum}}  剩余: {{item.count}}</text>
                 </view>
-                <view class="goodBut" hidden="{{ordersBut}}">
+                <view class="goodBut">
                   <!-- 主容器 -->
-                  <view class="stepper" data-index="{{i}}">
+                  <view class="stepper">
                     <!-- 减号 -->
-                    <text class="{{minusStatus}}" bindtap="bindMinus">-</text>
+                    <text class="{{numberList[index].minusStatus == null ? 'disabled':numberList[index].minusStatus}}" bindtap="bindMinus"  data-id="{{item.id}}">-</text>
                     <!-- 数值 -->
-                    <input type="number" bindchange="bindManual" value="{{pnumber}}" name="num" data-name="table.goodsDetailList.num" readonly/>
+                    <input type="number" bindchange="bindManual" value="{{numberList[index].num == null ? 0:numberList[index].num}}" name="num" disabled="disabled" />
                     <!-- 加号 -->
-                    <text class="normal" bindtap="bindPlus">+</text>
+                    <text class="normal" bindtap="bindPlus" data-id="{{item.id}}">+</text>
                   </view>
                 </view>
               </view>
             </block>
+            <view class="goodsTitle" hidden="{{prompt}}">{{ordersTitle}}</view>
           </view>
         </scroll-view>
-        <view class="goodsTitle" hidden="{{prompt}}">{{ordersTitle}}</view>
+        
       </view>
     </view>
   </view>
@@ -83,7 +78,7 @@
     <view class="feather feather_o">
       预订商品：
       <view class="feather-floor text">
-        <input type='text' name="meetName" value="{{table.meetName}}" bindinput="inputgetName" data-name="table.meetName" placeholder="{{searchTitle}}" bindfocus="openSearchFocus" />
+        <input type='text' bindinput="inputgetName" placeholder="{{searchTitle}}" bindfocus="openSearchFocus" />
       </view>
     </view>
     <view class="feather feather_o" style="height: 90px">

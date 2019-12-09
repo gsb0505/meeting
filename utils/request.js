@@ -127,9 +127,7 @@ const meetDetailList = (params,success,fail) =>{
 const roomOrderAdd = (params,success, fail) => {
   var options = {
     url: config.service.roomOrderAddUrl,
-    data: {
-      orderDetail: params
-    },
+    data: JSON.stringify(params),
     method: 'POST',
     // header: {
     //   "Content-Type": "text/xml"

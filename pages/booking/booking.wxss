@@ -279,8 +279,12 @@ textarea{
     float: left;
 } 
 .goodLeft text{
-  line-height: 4ch;
-  display:inline;
+  line-height: 3ch;
+  display:block;
+  padding-left: 100px;
+}
+.goodLeft text.pro-title{
+  font-size: 14px;
 }
 .goodBut{
     float:right;

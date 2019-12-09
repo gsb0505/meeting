@@ -14,7 +14,7 @@
             <block wx:for="{{goodsList}}" wx:key="{{item.id}}" wx:for-item="item">
               <view class="goodsItem" data-id="{{item.id}}">
                 <view class="goodLeft">
-                  <image src="../../images/userhead.jpg"></image>
+                  <image src="{{item.photoUrl == null ?'../../images/userhead.jpg': goodsResource + item.photoUrl}}"></image>
                   <text class="pro-title">{{item.goodsName}}</text>
                   <text>商家: {{item.storeCode}} </text>
                   <text>价格: {{item.price}}</text>

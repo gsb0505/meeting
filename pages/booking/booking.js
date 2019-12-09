@@ -4,6 +4,7 @@ const util = require('../../utils/util.js');
 const request = require('../../utils/request.js')
 const X2JS = require('../../utils/we-x2js.js')
 const bindinput = require('../../utils/bindinput.js')
+var config = require('../../config.js')
 Page(Object.assign({
     data: {
       chosens: false,
@@ -53,7 +54,7 @@ Page(Object.assign({
       totalPage: '',
       totalResult: '',
       index: 0,
-
+      goodsResource: config.hostManage
     },
     onLoad: function(options) {
       // getApp().auth();

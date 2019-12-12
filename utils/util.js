@@ -27,19 +27,6 @@
         // return h + ':' + m + ':' + s;
       }
 
-// 时间格式转换 yyyy/mm/dd
-function formatTime(date) {
-  var year = date.getFullYear()
-  var month = date.getMonth() + 1
-  var day = date.getDate()
-
-  var hour = date.getHours()
-  var minute = date.getMinutes()
-  var second = date.getSeconds()
-
-
-  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
-}
 // 时间格式转换 yyyy－mm－dd
 function formatTime2(date) {
   var year = date.getFullYear()

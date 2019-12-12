@@ -13,7 +13,7 @@
     <!-- 会议室 -->
     <block wx:for="{{orderDetailList}}" wx:key="item.id">
         <view wx:if="{{item.errCode == 1}}" class="ordersRoom" >
-            <view class="roomLeft">
+            <view class="roomLeft" bindtap="lookMeet" id="{{item.id}}">
             <text>{{item.meetName}}</text>
                 <text>预定时间: {{item.meetDate}} {{item.meetStartTime}} -- {{item.meetEndTime}}  </text>
                 <text>会议室门号: {{item.meetRoomName}}</text>
@@ -26,7 +26,7 @@
         </view>
               <!-- 待使用 -->
        <view wx:if="{{item.errCode == 4}}" class="ordersRoom" >
-            <view class="roomLeft">
+            <view class="roomLeft" bindtap="lookMeet" id="{{item.id}}">
             <text>{{item.meetName}}</text>
                 <text>预定时间: {{item.meetDate}} {{item.meetStartTime}} -- {{item.meetEndTime}}  </text>
                 <text>会议室门号: {{item.meetRoomName}}</text>
@@ -38,7 +38,7 @@
         </view>
         <!-- 已完成 -->
        <view wx:if="{{item.errCode == 2}}" class="ordersRoom" >
-            <view class="roomLeft">
+            <view class="roomLeft" bindtap="lookMeet" id="{{item.id}}">
             <text>{{item.meetName}}</text>
                 <text>预定时间: {{item.meetDate}} {{item.meetStartTime}} -- {{item.meetEndTime}}  </text>
                 <text>会议室门号: {{item.meetRoomName}}</text>
@@ -47,7 +47,7 @@
         </view>
           <!-- 已撤销 -->
        <view wx:if="{{item.errCode == 3}}" class="ordersRoom" >
-            <view class="roomLeft">
+            <view class="roomLeft" bindtap="lookMeet" id="{{item.id}}">
             <text>{{item.meetName}}</text>
                 <text>预定时间: {{item.meetDate}} {{item.meetStartTime}} -- {{item.meetEndTime}}  </text>
                 <text>会议室门号: {{item.meetRoomName}}</text>

@@ -59,7 +59,7 @@ Page(Object.assign({
     onLoad: function(options) {
       // getApp().auth();
       // 页面初始化 options为页面跳转所带来的参数
-
+      this.queryGoodData();
       this.setData({
         'table.meetDate': util.formatTime(new Date),
         'table.id': options.id
@@ -85,8 +85,11 @@ Page(Object.assign({
         var x2js = new X2JS();
 
         let orderDetails = x2js.xml2js(res.data)
-        // debugger
+
         let orderDetail = orderDetails == null || orderDetails == '' || typeof(orderDetails) == 'undefined' ? [] : orderDetails.orderDetail;
+        // debugger
+        orderDetail.meetDate = util.formatTime(new Date(orderDetail.meetDate));
+        console.log(orderDetail.meetDate);
         //给页面赋值
         that.setData({
           table: orderDetail
@@ -400,7 +403,7 @@ Page(Object.assign({
 
     },
     //商品数据查询方法
-    queryData: function(info) {
+    queryGoodData: function(info) {
       const that = this;
       //获取userid公共变量
       let userId = app.globalData.userId;
@@ -419,11 +422,13 @@ Page(Object.assign({
         //接口返回
         var x2js = new X2JS();
         let goods = x2js.xml2js(res.data);
+        // debugger
         console.log(JSON.stringify(goods));
         let goodsList = goods == null || goods == '' || typeof(goods) == 'undefined' ? [] : goods.goodsInfoes.goodsInfo;
+        goodsList = typeof (goodsList) == 'undefined' ? [] : goodsList;
         // // debugger      
-        let totalPage = goodsList == null ? 1 : goodsList[0].pageCount[0].totalPage;
-        let totalResult = goodsList == null ? 0 : goodsList[0].pageCount[0].totalResult;
+        let totalPage = goodsList.length==0 ? 1 : goodsList[0].pageCount[0].totalPage;
+        let totalResult = goodsList.length == 0 ? 0 : goodsList[0].pageCount[0].totalResult;
 
         let numberList = that.data.numberList;
         for (let i = 0; i < goodsList.length; i++) {

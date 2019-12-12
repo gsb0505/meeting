@@ -1,12 +1,22 @@
 // pages/booking/booking.js
 var util = require('../../utils/util.js');
+const request = require('../../utils/request.js')
+const X2JS = require('../../utils/we-x2js.js')
+var app = getApp()
 Page({
   data:{
-    times: ['08:00--12:00','14:00--18:00'],
-    floor:['上午', '下午'],
-    bookFloor:'6F',
-    bookPlan:'A区15',
-    bookArea:'A区',
+    table: {
+      id: '',
+      meetDate: '',
+      meetStartTime: '',
+      meetEndTime: '',
+      meetRoomID: '',
+      meetRoomName:'',
+      meetName: '',
+      specialdemand: '',
+      emailNotification: '',
+      goodsDetailList: [],
+    },
     index: 0,
     first: 0,
     picker:true
@@ -19,7 +29,64 @@ Page({
         picker: false,
         date:util.formatTime(new Date)
       })
+    }else{
+      console.log("dd=" + options.id)
+      let id = options.id;
+      this.queryData(id);
     }
+    // this.queryRoomData();
+  },
+  //会议室查询方法
+  queryRoomData: function () {
+    const that = this
+    // debugger
+    //调用会议查询接口
+    request.roomAllList(function (res) {
+      //接口返回
+      var x2js = new X2JS();
+      let details = x2js.xml2js(res.data)
+      let detailList = details == null || details == '' || typeof (details) == 'undefined' ? [] : details.meetRooms.meetRoom;
+      //给页面赋值
+      that.setData({
+        roomArray: detailList,
+        'table.meetRoomID': detailList[0].id,
+      })
+      var roomIndex = 0
+      for (var i = 0; i < detailList.length; i++) {
+        let detail = detailList[i];
+        if (detail.id == that.data.roomIndex) {
+          roomIndex = i
+          break
+        }
+      }
+      that.setData({
+        roomIndex: roomIndex
+      })
+    })
+  },
+  //会议数据查询方法
+  queryData: function (id) {
+    let ids = id
+    const that = this
+    //调用会议查询接口
+    request.meetDetailList({
+      id: ids
+    }, function (res) {
+      debugger
+      //接口返回
+      var x2js = new X2JS();
+
+      let orderDetails = x2js.xml2js(res.data)
+
+      let orderDetail = orderDetails == null || orderDetails == '' || typeof (orderDetails) == 'undefined' ? [] : orderDetails.orderDetail;
+      // debugger
+      orderDetail.meetDate = util.formatTime(new Date(orderDetail.meetDate));
+      console.log(orderDetail.meetDate);
+      //给页面赋值
+      that.setData({
+        table: orderDetail
+      })
+    })
   },
   onReady:function(){
     // 页面渲染完成

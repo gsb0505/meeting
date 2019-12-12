@@ -88,6 +88,7 @@ Page({
       //接口返回
       var x2js = new X2JS();
       let orderDetails = x2js.xml2js(res.data)
+      // debugger
       let orderDetailList = orderDetails == null || orderDetails == '' || typeof (orderDetails) == 'undefined' ? [] : orderDetails.orderDetails.orderDetail;
       // debugger      
       let totalPage = orderDetailList == null ? 1 :orderDetailList[0].pageCount[0].totalPage;
@@ -151,5 +152,12 @@ Page({
     wx.navigateTo({
       url: '/pages/booking/booking?id='+id
     });
-  }
+  },
+  lookMeet: function (e) {
+    const id = e.currentTarget.id
+    console.log(id);
+    wx.navigateTo({
+      url: '/pages/booking-detail/booking-detail?id=' + id
+    });
+  },
 })

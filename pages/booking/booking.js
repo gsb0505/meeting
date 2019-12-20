@@ -32,7 +32,7 @@ Page(Object.assign({
       totalPage: 1,
       totalResult: 0,
       orderDetailList: [],
-      numberList: [],
+      numberList: [], //商品数量±存储
       proSum: 0,
       proPrice: 0,
       // 使用data数据对象设置样式名  
@@ -48,7 +48,7 @@ Page(Object.assign({
         emailNotification: '',
         goodsDetailList: [],
       },
-      goodsList: [],
+      goodsList: [],  //商品列表存储
       prompt: '',
       goodsTitle: '',
       totalPage: '',
@@ -83,17 +83,23 @@ Page(Object.assign({
         // debugger
         //接口返回
         var x2js = new X2JS();
-
         let orderDetails = x2js.xml2js(res.data)
 
         let orderDetail = orderDetails == null || orderDetails == '' || typeof(orderDetails) == 'undefined' ? [] : orderDetails.orderDetail;
         // debugger
         orderDetail.meetDate = util.formatTime(new Date(orderDetail.meetDate));
+
         console.log(orderDetail.meetDate);
-        //给页面赋值
+
         that.setData({
-          table: orderDetail
+          table: orderDetail,
+          goodsDetailList: goodsList,
         })
+        //给页面赋值
+        let goodsList = orderDetail.goodsDetailList;
+        //商品数量±存储
+        that.goodNumCountList(goodsList, true);
+
       })
     },
 
@@ -121,7 +127,7 @@ Page(Object.assign({
           }
         }
         that.setData({
-          roomIndex: roomIndex
+          roomIndex: roomIndex,
         })
       })
     },
@@ -430,17 +436,8 @@ Page(Object.assign({
         let totalPage = goodsList.length==0 ? 1 : goodsList[0].pageCount[0].totalPage;
         let totalResult = goodsList.length == 0 ? 0 : goodsList[0].pageCount[0].totalResult;
 
-        let numberList = that.data.numberList;
-        for (let i = 0; i < goodsList.length; i++) {
-          let id = goodsList[i].id;
-          let numb = numberList[i];
-          if (numb == null || numb == '' || typeof(numb) == 'undefined') {
-            numberList.push({
-              "id": id,
-              "num": 0
-            });
-          }
-        }
+        //商品数量±存储
+        that.goodNumCountList(goodsList,false);
         //给页面赋值
         that.setData({
           goodsList: that.data.goodsList.concat(goodsList),
@@ -541,14 +538,21 @@ Page(Object.assign({
     },
     getProPriceSum() {
       let numberList = this.data.table.goodsDetailList;
+      console.log("goodsDetailList=>" + JSON.stringify(numberList));
       var proPrice = 0;
       for (let i = 0; i < numberList.length; i++) {
-        proPrice += numberList[i].amount;
+        let amount=numberList[i].amount;
+        if (this.isArray(amount)){
+          proPrice += parseFloat(numberList[i].amount[0]);
+        }else{
+          proPrice += parseFloat(numberList[i].amount);
+        }
+       
       }
       this.setData({
         'proPrice': proPrice
       });
-      return proPrice;
+      return proPrice
     },
     updateGoodDetail: function(opt, pnumber, proId) {
       let datalList = this.data.table.goodsDetailList;
@@ -596,9 +600,37 @@ Page(Object.assign({
       this.setData({
         'table.goodsDetailList': datalList
       });
-    }
-
+    },
+    //商品计数、计算总价、显示到页面
+    goodNumCountList: function (goodsList,isNum){
+      let numberList = this.data.numberList;
+      let proSum = 0;
+      for (let i = 0; i < goodsList.length; i++) {
+        let id = goodsList[i].id;
+        let numb = numberList[i];
+        proSum += parseInt(goodsList[i].num)
+        let num = 0;
+        if (isNum){
+          num = parseFloat(goodsList[i].num)
+        }
+        if (numb == null || numb == '' || typeof (numb) == 'undefined') {
+          numberList.push({
+            "id": id,
+            "num": num
+          });
+        }
+      }
+      let searchTitle = '预订数量:' + proSum + "件.总计:" + this.getProPriceSum();
+      this.setData({
+        numberList: numberList,
+        proSum: proSum,
+        searchTitle: searchTitle
+      });
+    },
+  
     // --------------------  商品列表事件 end  ------------------------
-
+    isArray: function (o) {
+      return Object.prototype.toString.call(o) == '[object Array]';
+    },
   },
   bindinput))

@@ -24,9 +24,9 @@
                   <!-- 主容器 -->
                   <view class="stepper">
                     <!-- 减号 -->
-                    <text class="{{table.goodsDetailList[index].minusStatus == null ? 'disabled':table.goodsDetailList[index].minusStatus}}" bindtap="bindMinus"  data-id="{{item.id}}">-</text>
+                    <text class="{{numberList[index].minusStatus == null ? 'disabled':numberList[index].minusStatus}}" bindtap="bindMinus"  data-id="{{item.id}}">-</text>
                     <!-- 数值 -->
-                    <input type="number"  value="{{table.goodsDetailList[index].num == null ? 0:table.goodsDetailList[index].num}}" name="num" disabled="disabled" />
+                    <input type="number" bindchange="bindManual" value="{{numberList[index].num == null ? 0:numberList[index].num}}" name="num" disabled="disabled" />
                     <!-- 加号 -->
                     <text class="normal" bindtap="bindPlus" data-id="{{item.id}}">+</text>
                   </view>

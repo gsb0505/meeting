@@ -37,7 +37,7 @@ Page(Object.assign({
       // 使用data数据对象设置样式名  
       minusStatus: 'disabled',
       table: {
-        id: '',
+        id: 0,
         meetDate: '',
         meetStartTime: '06:00',
         meetEndTime: '06:00',
@@ -55,7 +55,7 @@ Page(Object.assign({
       index: 0,
       goodsResource: config.hostManage,
       modiOperation:false, //false 添加 true 修改
-
+      numberList:[],
     },
     onLoad: function(options) {
       // getApp().auth();
@@ -71,7 +71,6 @@ Page(Object.assign({
         let id = options.id;
         this.queryData(id);
       }
-
     },
     //会议数据查询方法
     queryData: function(id) {
@@ -84,21 +83,19 @@ Page(Object.assign({
         //接口返回
         var x2js = new X2JS();
         let orderDetails = x2js.xml2js(res.data)
-
-        let orderDetail = orderDetails == null || orderDetails == '' || typeof(orderDetails) == 'undefined' ? [] : orderDetails.orderDetail;
-        // debugger
+        let orderDetail = typeof(orderDetails) == 'undefined' ? [] : orderDetails.orderDetail;
         orderDetail.meetDate = util.formatTime(new Date(orderDetail.meetDate));
-        orderDetail.createTime = util.formatTime2(new Date(orderDetail.createTime));
-        orderDetail.updateTime = util.formatTime2(new Date());
-        console.log(orderDetail.meetDate);
+        orderDetail.createTime = new Date(orderDetail.createTime).toISOString();
+        orderDetail.updateTime = new Date().toISOString();
+        console.log(orderDetail);
         that.setData({
           table: orderDetail,
           goodsDetailList: typeof (orderDetail.goodsDetailList) == 'undefined' ? [] : orderDetail.goodsDetailList,
           modiOperation: true,
         })
-        debugger
         //汇总金额
         that.getProPriceSum();
+        that.goodNumCountList();
       })
     },
 
@@ -195,6 +192,8 @@ Page(Object.assign({
       var meetStartTime = that.data.table.meetStartTime;
       var meetEndTime = that.data.table.meetEndTime;
       var meetRoomID = that.data.table.meetRoomID;
+      var meetName = that.data.table.meetName;
+      let glideNo = that.data.table.glideNo;
       if (!meetDate || !meetStartTime || !meetEndTime || !meetRoomID) {
         wx.showToast({
           title: '请输入预约信息.',
@@ -204,17 +203,9 @@ Page(Object.assign({
         })
         return;
       }
-      debugger
-
       var d = new Date();
-      var year = d.getFullYear(); //年
-      var month = d.getMonth() + 1; //月
-      var day = d.getDate(); //日
-
-      var hh = d.getHours(); //时
-      var mm = d.getMinutes(); //分
-      var curdate = year + '-' + this.addzero(month) + '-' + this.addzero(day);
-      var curhhmm = this.addzero(hh) + ':' + this.addzero(mm);
+      var curdate = util.formatTime(d);
+      var curhhmm = util.formatTime3(d);
       if (meetDate.toString() == curdate.toString()) {
         if (meetStartTime.toString() < curhhmm.toString()) {
           wx.showToast({
@@ -233,34 +224,52 @@ Page(Object.assign({
           mask: true
         })
         return;
+      } 
+      if (meetStartTime.toString() == meetEndTime.toString()){
+        wx.showToast({
+          title: '开始时间和结束时间不能相同',
+          icon: 'loading',
+          duration: 1000,
+          mask: true
+        })
+        return;
       }
-
-      let param = {
+      if (meetName == undefined || meetName==''){
+        wx.showToast({
+          title: '会议主题不能为空',
+          icon: 'loading',
+          duration: 1000,
+          mask: true
+        })
+        return;
+      }
+      
+      var x2js = new X2JS();
+      //调用会议查询接口
+      request.meetList({
         'meetDate': meetDate,
         'meetStartTime': meetStartTime,
         'meetEndTime': meetEndTime,
         'meetRoomID': meetRoomID[0]
-      };
-      var x2js = new X2JS();
-      //调用会议查询接口
-      request.meetList(param, function (res) {
-        debugger
+      }, function (res) {
         //接口返回
-
-        let details = x2js.xml2js(res.data)
-
-        let detailList = details == null || details == '' || typeof (details) == 'undefined' ? [] : details.orderDetails;
-
-        if (detailList != null && detailList != undefined && detailList.length != 0) {
-          // out.print(false);
-          if (glideNo == null) {
+        let detailList =[];
+        if (res.data!=''){
+          let details = x2js.xml2js(res.data)
+          let orderDetails = typeof (details) == 'undefined' ? undefined : details.orderDetails;
+          detailList = typeof (orderDetails) == 'undefined' ? [] : details.orderDetails.orderDetail;
+        }
+        if (detailList !=undefined && detailList.length != 0) {
+          debugger
+          if (glideNo == null || glideNo == undefined ) {
+            let flag = false;
             for (let i = 0; i < detailList.length; i++) {
               let detail = detailList[i];
-              if (detail.getErrCode() == 3) {
+              if (detail.errCode[0] != 3) {
                 flag = true;
+                break;
               } else {
                 flag = false;
-                break;
               }
             }
             if (flag == true) {
@@ -310,15 +319,28 @@ Page(Object.assign({
           request.roomOrderAdd(that.data.table, function (res) {
             debugger
             if (res.data==true) {
-              wx.showToast({
+              wx.showModal({
                 title: '预约成功!',
-                icon: 'success',
-                duration: 1000,
-                mask: true,
+                content: '会议预约成功',
+                confirmText: '知道了',
+                showCancel: false,
+                success: function (res) {
+                  wx.reLaunch({
+                    url: '../orders/orders',
+                  })
+
+                }
+              })
+            }else{
+              wx.showModal({
+                title: '预约失败',
+                content: '会议预约失败',
+                confirmText: '知道了',
+                showCancel: false,
                 success: function () {
-                  wx.navigateTo({
-                    url: '/pages/orders/orders'
-                  });
+                  wx.reLaunch({
+                    url: '../orders/orders',
+                  })
                 }
               })
             }
@@ -334,13 +356,13 @@ Page(Object.assign({
                 duration: 1000,
                 mask: true,
                 success:function(){
-                  wx.navigateBack({
+                  wx.reLaunch({
                     delta: 1
                   })
                 }
               })
             } else {
-              wx.showToast({
+              wx.reLaunch({
                 title: '预约修改失败!',
                 icon: 'error',
                 duration: 1000,
@@ -350,10 +372,7 @@ Page(Object.assign({
           })
         }
      
-      })
-
-
-      
+      })  
     },
     getScanning: function() {
       app.getScanning()
@@ -365,8 +384,6 @@ Page(Object.assign({
       this.setData({
         hiddenPlan: !this.data.hiddenPlan
       });
-      //加载全部会议数据
-      this.queryData(null);
     },
     // --------------------  商品列表事件 begin  ------------------------
     activity_clear: function() {
@@ -385,7 +402,6 @@ Page(Object.assign({
       this.setData({
         searchstr: e.detail.value
       })
-      //this.queryData(searchstr);
     },
     //搜索回调
     endsearchList(e) {
@@ -393,7 +409,7 @@ Page(Object.assign({
       this.setData({
         goodsList: [],
       });
-      this.queryData(this.data.searchstr);
+       this.queryGoodData(this.data.searchstr);
 
     },
     // 取消搜索
@@ -402,8 +418,7 @@ Page(Object.assign({
         searchstr: '',
         goodsList: [],
       });
-
-      this.queryData(this.data.searchstr);
+       this.queryGoodData(this.data.searchstr);
     },
     //清空搜索框
     activity_clear(e) {
@@ -467,7 +482,7 @@ Page(Object.assign({
         //接口返回
         var x2js = new X2JS();
         let goods = x2js.xml2js(res.data);
-        debugger
+        // debugger
         console.log(JSON.stringify(goods));
         let goodsList = goods == null || goods == '' || typeof(goods) == 'undefined' ? [] : goods.goodsInfoes.goodsInfo;
         goodsList = typeof (goodsList) == 'undefined' ? [] : goodsList;
@@ -494,7 +509,7 @@ Page(Object.assign({
       debugger
       for (let i = 0; i < goodsDetailList.length; i++) {
         goodsDetail = goodsDetailList[i];
-        if (goodsDetail.ginfoId == id) {
+        if (goodsDetail.ginfoId[0] == id) {
           index = i;
           break;
         }
@@ -523,17 +538,14 @@ Page(Object.assign({
       debugger
         // // 现订单中查找商品  
       for (let i = 0; i < goodsDetailList.length; i++) {
-        if (goodsDetailList[i] && goodsDetailList[i].id[0] == id) {
+        if (goodsDetailList[i].ginfoId[0] == id) {
           index = i;
           break;
         }
       }
       let num = 1;
       if (index != undefined) { 
-        num = goodsDetailList[index].num +1 ;
-        // // 只有大于一件的时候，才能normal状态，否则disable状态  
-        let minusStatus = goodsDetailList[index].num > product.count ? 'disabled' : 'normal';
-        goodsDetailList[index].minusStatus = minusStatus;
+        num = parseInt(goodsDetailList[index].num) +1 ;
       }
 
       //更新商品明细
@@ -550,7 +562,6 @@ Page(Object.assign({
       }
     },
     getProPriceSum:function() {
-      debugger
       let goodsDetailList = this.data.table.goodsDetailList;
       let proPrice = 0;
       let proSum = 0;
@@ -558,7 +569,7 @@ Page(Object.assign({
         console.log("goodsDetailList=>" + JSON.stringify(goodsDetailList));
         for (let i = 0; i < goodsDetailList.length; i++) {
           let amount = goodsDetailList[i].amount;
-          proSum += goodsDetailList[i].num;
+          proSum += parseInt(goodsDetailList[i].num);
           if (this.isArray(amount)){
             proPrice += parseFloat(goodsDetailList[i].amount[0]);
           }else{
@@ -574,13 +585,11 @@ Page(Object.assign({
       });
     },
     updateGoodDetail: function(opt, pnumber, proId) {
-      debugger
       let datalList = this.data.table.goodsDetailList == undefined ? [] : this.data.table.goodsDetailList;
       let product = this.getProById(proId);
 
       //移除指定商品id，商品的数量
       if (opt == -1) {
-        debugger
         for (let i = 0; i < datalList.length; i++) {
           if (datalList[i].ginfoId == proId[0]) {
             datalList[i].num--
@@ -619,32 +628,40 @@ Page(Object.assign({
       this.setData({
         'table.goodsDetailList': datalList,
       });
+      this.goodNumCountList();
     },
 
   //商品计数、计算总价、显示到页面
-  goodNumCountList: function (goodsList, isNum) {
-    let numberList = this.data.numberList;
+  goodNumCountList: function () {
+    debugger
+    let goodsDetailList = this.data.table.goodsDetailList;
+    let numberList = [];
+    let goodsList = this.data.goodsList;
     let proSum = 0;
+    
     for (let i = 0; i < goodsList.length; i++) {
-      let id = goodsList[i].id;
-      let numb = numberList[i];
-      proSum += parseInt(goodsList[i].num)
-      let num = 0;
-      if (isNum) {
-        num = parseFloat(goodsList[i].num)
+      numberList.push({
+        "id": goodsList[i].id,
+        "num": 0
+      });
+    }
+    for (let i = 0; i < goodsList.length; i++) {
+      let goodsInfo = goodsList[i];
+      let goodsIndex;
+      for (let j = 0; j < goodsDetailList.length;j++){
+        let goodsDetail = goodsDetailList[j];
+        if (goodsDetail.ginfoId[0] == goodsInfo.id[0]){
+            goodsIndex =j;
+            break;
+        }
       }
-      if (numb == null || numb == '' || typeof (numb) == 'undefined') {
-        numberList.push({
-          "id": id,
-          "num": num
-        });
+      if (goodsIndex != undefined ){
+        numberList[i].num = goodsDetailList[goodsIndex].num;
       }
     }
-    let searchTitle = '预订数量:' + proSum + "件.总计:" + this.getProPriceSum();
+    
     this.setData({
-      numberList: numberList,
-      proSum: proSum,
-      searchTitle: searchTitle
+      numberList: numberList
     });
   },
     

@@ -151,13 +151,12 @@ const roomOrderUpdate = (params, success, fail) => {
     url: config.service.roomOrderUpdateUrl,
     data: JSON.stringify(params),
     method: 'POST',
-    // header: {
-    //   "Content-Type": "text/xml"
-    // },
     success(result) {
+      debugger
       success(result)
     },
     fail(error) {
+      debugger
       if (typeof (fail) != 'undefined') {
         fail(error)
       }

@@ -10,6 +10,11 @@
          return [year, month, day].map(formatNumber).join('-')
           // + ' ' + [hour, minute, second].map(formatNumber).join(':')
       }
+      function formatTime3(date) {
+        var hour = date.getHours()
+        var minute = date.getMinutes()
+        return [hour, minute].map(formatNumber).join(':')
+      }
       function formatNumber(n) {
             n = n.toString()
             return n[1] ? n : '0' + n
@@ -83,5 +88,6 @@ function Type(obj) {
  module.exports = {
   formatTime: formatTime,
    formatTime2: formatTime2,
+   formatTime3: formatTime3,
   getCurrentTime: getCurrentTime
 }

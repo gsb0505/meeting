@@ -6,7 +6,6 @@ const util = require('../../utils/util.js')
 const X2JS = require('../../utils/we-x2js.js')
 Page({
   data: {
-    banners:["../../images/index-focus-1.png","../../images/index-focus-2.png"],
     roomList:[],
     // 当前页
     pageNumber: 1,

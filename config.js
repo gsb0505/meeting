@@ -32,6 +32,7 @@ var config = {
      //全部会议室查询
     roomAllUrl: `${host}/meetRoom/queryList`,
     roomOrderAddUrl: `${host}/orderDetail/add`,
+    roomOrderUpdateUrl: `${host}/orderDetail/modify`,
     //商品列表查询
     goodsListUrl: `${host}/goodsInfo/query`,
   },

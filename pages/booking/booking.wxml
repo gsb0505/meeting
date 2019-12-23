@@ -8,13 +8,13 @@
       </SearchBar>
       <view class='containerItem'>
         <view style="height:40rpx;"></view>
-        <scroll-view scroll-y="{{true}}" bindscrolltolower="lower" lower-threshold="50" class="pull-down-load">
+<scroll-view scroll-y="{{true}}" bindscrolltolower="lower" lower-threshold="50" class="pull-down-load">
           <view class="productContent">
             <!-- 商品列表-->
             <block wx:for="{{goodsList}}" wx:key="{{item.id}}" wx:for-item="item">
               <view class="goodsItem" data-id="{{item.id}}">
                 <view class="goodLeft">
-                  <image src="{{item.photoUrl == null ?'../../images/userhead.jpg': goodsResource + item.photoUrl}}"></image>
+                  <image src="{{item.photoUrl == null ?'../../images/userhead.jpg': goodsResource + item.photoUrl}}" style="height: 64px;width: 64px" ></image>
                   <text class="pro-title">{{item.goodsName}}</text>
                   <text>商家: {{item.storeCode}} </text>
                   <text>价格: {{item.price}}</text>
@@ -24,9 +24,9 @@
                   <!-- 主容器 -->
                   <view class="stepper">
                     <!-- 减号 -->
-                    <text class="{{numberList[index].minusStatus == null ? 'disabled':numberList[index].minusStatus}}" bindtap="bindMinus"  data-id="{{item.id}}">-</text>
+                    <text class="{{table.goodsDetailList[index].minusStatus == null ? 'disabled':table.goodsDetailList[index].minusStatus}}" bindtap="bindMinus"  data-id="{{item.id}}">-</text>
                     <!-- 数值 -->
-                    <input type="number" bindchange="bindManual" value="{{numberList[index].num == null ? 0:numberList[index].num}}" name="num" disabled="disabled" />
+                    <input type="number"  value="{{table.goodsDetailList[index].num == null ? 0:table.goodsDetailList[index].num}}" name="num" disabled="disabled" />
                     <!-- 加号 -->
                     <text class="normal" bindtap="bindPlus" data-id="{{item.id}}">+</text>
                   </view>
@@ -52,10 +52,11 @@
       <view class="header-time">
         时间：
         <picker disabled="{{picker}}" bindchange="bindPickerOrderStrart" value="{{table.meetStartTime}}" range="{{daytime}}" name="meetStartTime" data-name="table.meetStartTime">
-          <text class="picker">{{daytime[startTime]}}</text>
-        </picker> 至
+          <text class="picker">{{table.meetStartTime}}</text>
+        </picker>
+         至
         <picker disabled="{{picker}}" bindchange="bindPickerOrderEnd" value="{{table.meetEndTime}}" range="{{daytime}}" name="meetEndTime" data-name="table.meetEndTime">
-          <text class="picker">{{daytime[endTime]}}</text>
+          <text class="picker">{{table.meetEndTime}}</text>
         </picker>
       </view>
     </view>

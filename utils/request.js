@@ -144,6 +144,29 @@ const roomOrderAdd = (params,success, fail) => {
   wx.request(options)
 }
 
+
+/*修改会议预约 */
+const roomOrderUpdate = (params, success, fail) => {
+  var options = {
+    url: config.service.roomOrderUpdateUrl,
+    data: JSON.stringify(params),
+    method: 'POST',
+    // header: {
+    //   "Content-Type": "text/xml"
+    // },
+    success(result) {
+      success(result)
+    },
+    fail(error) {
+      if (typeof (fail) != 'undefined') {
+        fail(error)
+      }
+    },
+  }
+  wx.request(options)
+}
+
+
 /*查询商品列表 */
 const goodsList = (params, success, fail) => {
   var options = {
@@ -188,26 +211,6 @@ const uploadPhoto = (data, success, fail) => {
 }
 
 
-//获取街道列表
-const streetList = (success, fail) => {
-  // debugger
-  var options = {
-    url: config.service.streetListUrl,
-    data: {
-      userId: getApp().globalData.userId,
-    },
-    method: 'POST',
-    success(result) {
-      success(result)
-    },
-    fail(error) {
-      if (typeof (fail) != 'undefined') {
-        fail(error)
-      }
-    }
-  }
-  wx.request(options)
-}
 
 module.exports = {
   login: login,
@@ -219,6 +222,7 @@ module.exports = {
   roomList: roomList,
   roomAllList: roomAllList,
   roomOrderAdd: roomOrderAdd,
+  roomOrderUpdate: roomOrderUpdate,
   goodsList: goodsList,
   //编辑车辆记录
   // updateRecord: updateRecord,

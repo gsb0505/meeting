@@ -241,7 +241,10 @@ input{
   height: 30px;
   font-size: 16px;
 }
-
+image{
+ height: 64px;
+ width: 64px;
+}
 textarea{
   height: 70px;font-size: 16px;
 }
@@ -264,7 +267,7 @@ textarea{
     margin-bottom: 30rpx;
     background-color: #fff;
     padding:10rpx;
-    height:200rpx;
+    height:220rpx;
     border-top:1px solid #ddd;
     border-bottom:1px solid #ddd;
 }

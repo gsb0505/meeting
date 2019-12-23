@@ -28,18 +28,17 @@
       }
 
 // 时间格式转换 yyyy－mm－dd
-function formatTime2(date) {
-  var year = date.getFullYear()
-  var month = date.getMonth() + 1
-  var day = date.getDate()
+const formatTime2 = date => {
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+  const hour = date.getHours()
+  const minute = date.getMinutes()
+  const second = date.getSeconds()
 
-  var hour = date.getHours()
-  var minute = date.getMinutes()
-  var second = date.getSeconds()
-
-
-  return [year, month, day].map(formatNumber).join('-')
+  return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
+
 
 function formatDate(date, split) {
   var year = date.getFullYear()
@@ -83,5 +82,6 @@ function Type(obj) {
 
  module.exports = {
   formatTime: formatTime,
+   formatTime2: formatTime2,
   getCurrentTime: getCurrentTime
 }

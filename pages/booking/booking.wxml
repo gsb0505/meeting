@@ -28,7 +28,7 @@
                     <!-- 数值 -->
                     <input type="number" bindchange="bindManual" value="{{numberList[index].num == null ? 0:numberList[index].num}}" name="num" disabled="disabled" />
                     <!-- 加号 -->
-                    <text class="normal" bindtap="bindPlus" data-id="{{item.id}}">+</text>
+                    <text class="normal" bindtap="bindPlus" data-id="{{item}}">+</text>
                   </view>
                 </view>
               </view>

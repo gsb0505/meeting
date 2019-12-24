@@ -41,10 +41,10 @@ Page({
       //接口返回
       var x2js = new X2JS();
       let details = x2js.xml2js(res.data)
-      let detailList = details == null || details == '' || typeof (details) == 'undefined' ? [] : details.meetRooms.meetRoom;
+      let detailList = typeof (details) == 'undefined' ? [] : details.meetRooms.meetRoom.length == undefined ? [details.meetRooms.meetRoom]: details.meetRooms.meetRoom;
       //  debugger      
-      let totalPage = detailList == null ? 1 : detailList[0].pageCount[0].totalPage;
-      let totalResult = detailList == null ? 0 : detailList[0].pageCount[0].totalResult;
+      let totalPage = detailList == null ? 1 : detailList[0].pageCount.totalPage;
+      let totalResult = detailList == null ? 0 : detailList[0].pageCount.totalResult;
       let roomList = that.data.roomList.concat(detailList);
       for (let i = 0; i < roomList.length; i++) {
         

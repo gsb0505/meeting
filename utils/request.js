@@ -5,19 +5,16 @@
 var config = require('../config')
 
 const login = (user, success, fail) => {
-//  debugger
   var options = {
     url: config.service.loginUrl,
     data: { user: user },
     //method:'POST', //默认为 'GET'
     success(result) {
-     // debugger
       console.log(result)
       //JSON.stringify(result.data)
       success(result)
     },
     fail(error) {
-      debugger
       console.log(error)
       if (typeof (fail) != 'undefined') {
         fail(error)
@@ -104,9 +101,29 @@ const roomAllList = (success, fail) => {
 
 /*查询会议预约*/
 const meetDetailList = (params,success,fail) =>{
-  // debugger
   var options = {
     url: config.service.meetDetailListUrl,
+    data: {
+      orderDetail: params
+    },
+    method: 'GET',
+    success(result) {
+      success(result)
+    },
+    fail(error) {
+      if (typeof (fail) != 'undefined') {
+        fail(error)
+      }
+    },
+  }
+  wx.request(options)
+}
+
+/*查询会议预约*/
+const meetVerifi = (params, success, fail) => {
+  debugger
+  var options = {
+    url: config.service.meetVerifiUrl,
     data: {
       orderDetail: params
     },
@@ -129,9 +146,6 @@ const roomOrderAdd = (params,success, fail) => {
     url: config.service.roomOrderAddUrl,
     data: JSON.stringify(params),
     method: 'POST',
-    // header: {
-    //   "Content-Type": "text/xml"
-    // },
     success(result) {
       success(result)
     },
@@ -144,6 +158,23 @@ const roomOrderAdd = (params,success, fail) => {
   wx.request(options)
 }
 
+/*会议预约取消 */
+const roomOrderCancel = (params, success, fail) => {
+  var options = {
+    url: config.service.roomOrderCancelUrl,
+    data: JSON.stringify(params),
+    method: 'POST',
+    success(result) {
+      success(result)
+    },
+    fail(error) {
+      if (typeof (fail) != 'undefined') {
+        fail(error)
+      }
+    },
+  }
+  wx.request(options)
+}
 
 /*修改会议预约 */
 const roomOrderUpdate = (params, success, fail) => {
@@ -152,11 +183,9 @@ const roomOrderUpdate = (params, success, fail) => {
     data: JSON.stringify(params),
     method: 'POST',
     success(result) {
-      debugger
       success(result)
     },
     fail(error) {
-      debugger
       if (typeof (fail) != 'undefined') {
         fail(error)
       }
@@ -223,8 +252,8 @@ module.exports = {
   roomOrderAdd: roomOrderAdd,
   roomOrderUpdate: roomOrderUpdate,
   goodsList: goodsList,
-  //编辑车辆记录
-  // updateRecord: updateRecord,
+  roomOrderCancel: roomOrderCancel,
   uploadPhoto: uploadPhoto,
+  meetVerifi: meetVerifi,
   meetDetailList: meetDetailList
 }

@@ -1,7 +1,9 @@
 <!--pages/personal/personal.wxml-->
 <view class="personalWrap">
     <view class="personalMe" >
+      <view  bindtap='upShopLogo'>
         <image src="{{userHead}}" style="width:68px;height:68px;border:1px solid #ddd;float:left;margin:20rpx 20rpx;border-radius: 50%;"></image>
+        </view>
         <view class="personalInfo">
             <text>姓名: {{userId}}</text>
             <text>电话: {{phone}}</text>

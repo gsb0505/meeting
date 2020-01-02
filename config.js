@@ -6,7 +6,7 @@
 // const host = 'http://127.0.0.1:8082/meetCore';
 const host = 'http://106.14.61.179:8090/meetCore';
 // const hostManage = 'http://127.0.0.1:8081/meetManage';
-const hostManage = 'http://106.14.61.179:8091/meetManage';
+const hostManage = 'http://106.14.61.179:8091/meetManage/';
 var config = {
   host: host,
   hostManage: hostManage,
@@ -35,6 +35,7 @@ var config = {
     roomOrderUpdateUrl: `${host}/orderDetail/modify`,
     //商品列表查询
     goodsListUrl: `${host}/goodsInfo/query`,
+    uploadPhotoUrl: `${host}/goodsInfo/transferTo`,
   },
 
   //硬编码的词典

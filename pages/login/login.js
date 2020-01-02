@@ -1,6 +1,7 @@
 // pages/login/login.js
 const request = require('../../utils/request.js')
 const md5 = require('../../utils/md5.js')
+var config = require('../../config.js')
 const app = getApp();
 Page({
   data:{
@@ -105,6 +106,7 @@ Page({
                 getApp().globalData.isLogined = true,
                 getApp().globalData.userId = result.data.userId,
                 getApp().globalData.phone = result.data.phone,
+                getApp().globalData.userHead = config.hostManage + result.data.photoUrl,
                 wx.setStorage({
                   key: 'usernamepassword',
                   data: { userId: formData.userId, loginPSW: formData.loginPSW }

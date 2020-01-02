@@ -5,7 +5,7 @@
     <!-- 会议室 -->
      <block wx:for="{{roomList}}" wx:key="item.id"> 
      <view style=" padding-left: 10px;">
-       <image src="../../images/userhead.jpg" style="width:68px;height:68px;border:1px solid #ddd;float:left;margin:20rpx 20rpx;border-radius: 50%;" bindtap="itemClick"  id="{{item.id}}"></image>
+       <image src="{{item.photoUrl == null ?'../../images/userhead.jpg': imageUrlHost + item.photoUrl}}" style="width:68px;height:68px;border:1px solid #ddd;float:left;margin:20rpx 20rpx;border-radius: 50%;" bindtap="itemClick"  id="{{item.id}}"></image>
        </view>
        <!--会议室空闲-->
         <view wx:if="{{item.currentMeet =='空闲'}}" class="ordersRoom" bindtap="itemClick"  id="{{item.id}}" >

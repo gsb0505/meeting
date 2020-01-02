@@ -4,6 +4,7 @@ var app = getApp()
 const request = require('../../utils/request.js')
 const util = require('../../utils/util.js')
 const X2JS = require('../../utils/we-x2js.js')
+var config = require('../../config.js')
 Page({
   data: {
     roomList:[],
@@ -13,12 +14,15 @@ Page({
     totalPage: 1,
     totalResult: 0,
     page_size: 5,
-    stopLoadMoreTiem:false
+    stopLoadMoreTiem:false,
+    imageUrlHost: config.hostManage,
   },
   onLoad: function () {
     // getApp().auth();
+   
   },
   onShow:function(){
+    console.log(this.data.imageUrlHost)
     this.setData({
       roomList: [],
       pageNumber:1
@@ -46,6 +50,7 @@ Page({
       let totalPage = detailList == null ? 1 : detailList[0].pageCount[0].totalPage;
       let totalResult = detailList == null ? 0 : detailList[0].pageCount[0].totalResult;
       let roomList = that.data.roomList.concat(detailList);
+     // debugger
       for (let i = 0; i < roomList.length; i++) {
         
         let roomItem = roomList[i]; 

@@ -184,7 +184,7 @@ picker2{
 .picker2{
     position: relative;
     display: inline-block;
-    padding-right:206rpx;
+    padding-right:16rpx;
     font-size:30rpx;
     width:200px;
 }

@@ -308,6 +308,9 @@
 				var child = children.item(i);
 				if (child.nodeType === DOMNodeTypes.ELEMENT_NODE) {
 					var childName = getDomNodeLocalName(child);
+          if (childName=='id'){
+            debugger
+          } 
 
 					if (config.ignoreRoot)
             result[childName] = deserializeDomChildren(child, childName);
@@ -329,6 +332,9 @@
 			for (var iChild = 0; iChild < nodeChildren.length; iChild++) {
 				var child = nodeChildren.item(iChild);
 				var childName = getDomNodeLocalName(child);
+        if (childName=='id'){
+          // debugger
+        }
 
 				if (child.nodeType === DOMNodeTypes.COMMENT_NODE)
 					continue;
@@ -338,11 +344,12 @@
 				// We deliberately do not accept everything falsey here because
 				// elements that resolve to empty string should still be preserved.
 				if (result[childName] == null) {
-					result[childName] = [deserializeDomChildren(child, elementPath + "." + childName)];
-					ensureProperArrayAccessForm(result, childName, elementPath + "." + childName);
+					result[childName] = deserializeDomChildren(child, elementPath + "." + childName);
+          // debugger
+        	ensureProperArrayAccessForm(result, childName, elementPath + "." + childName);
 				} else {
 					if (!(result[childName] instanceof Array)) {
-						result[childName] = [result[childName]];
+						result[childName] =[result[childName]];
 						ensureProperArrayAccessForm(result, childName, elementPath + "." + childName);
 					}
 
@@ -713,7 +720,6 @@
 
 		// Transforms a DOM tree to JavaScript objects.
 		this.dom2js = function dom2js(domNode) {
-
 			return deserializeDomChildren(domNode, null);
 		};
 

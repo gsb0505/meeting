@@ -29,8 +29,12 @@ Page({
     //  getApp().auth();
   },
   onShow: function(){
+    this.setData({
+      orderDetailList: []
+    });
+    let errCode = this.data.errCode;
       //加载全部会议数据
-      this.queryData(null)
+    this.queryData(errCode)
   },
   //菜单按钮
   tabRight: function (e) {
@@ -87,12 +91,14 @@ Page({
       creator: userId, errCode: errCode, pageCount: { currentPage: this.data.pageNumber, showCount: page_size} }, function (res) {
       //接口返回
       var x2js = new X2JS();
-      let orderDetails = x2js.xml2js(res.data)
-      // debugger
-      let orderDetailList = orderDetails == null || orderDetails == '' || typeof (orderDetails) == 'undefined' ? [] : orderDetails.orderDetails.orderDetail;
+      let orderDetails = x2js.xml2js(res.data);
+        console.log(orderDetails);
+        let orderDetailList = typeof (orderDetails) == 'undefined' ? [] : orderDetails.orderDetails.orderDetail.length == undefined ?[orderDetails.orderDetails.orderDetail]:orderDetails.orderDetails.orderDetail;
+        console.log(orderDetailList)
       // debugger      
-      let totalPage = orderDetailList == null ? 1 :orderDetailList[0].pageCount[0].totalPage;
-        let totalResult = orderDetailList == null ? 0 : orderDetailList[0].pageCount[0].totalResult;
+      let totalPage = orderDetailList == null ? 1 :orderDetailList[0].pageCount.totalPage;
+      let totalResult = orderDetailList == null ? 0 : orderDetailList[0].pageCount.totalResult;
+        console.log(orderDetails);
       //给页面赋值
       that.setData({
         orderDetailList: that.data.orderDetailList.concat(orderDetailList),
@@ -107,7 +113,34 @@ Page({
   },
   //撤消会议按钮
   cancelMeet:function(e){
+    let that = this;
     let id = e.currentTarget.id;
+
+    let detail = {
+      'glideNo': id,
+      'errCode':3
+    };
+    request.roomOrderCancel(detail, function (res) {
+      //接口返回
+      if (res.data == true) {
+        wx.showModal({
+          title: '预约撤消成功!',
+          content: '会议预约撤消成功',
+          confirmText: '知道了',
+          showCancel: false,
+          success: function (res) {
+            that.onShow();
+          }
+        })
+      } else {
+        wx.showModal({
+          title: '预约撤消失败!',
+          content: '会议预约撤消失败，请重试！',
+          confirmText: '知道了',
+          showCancel: false
+        })
+      }
+    })
     console.log(id)
   },
   /**

@@ -11,8 +11,10 @@
         <view wx:if="{{item.currentMeet =='空闲'}}" class="ordersRoom" bindtap="itemClick"  id="{{item.id}}" >
             <view class="roomLeft">
             <text class="roomText">{{item.meetRoomName}}</text>
-                <text>当前 {{item.currentMeet}}</text>
-                <text>服务: {{item.specialdemand}}</text>
+            <view style="display:inline-block;">
+                <text class="rText" style="display:inline-block;">当前: </text><label class="kongText">{{item.currentMeet}}</label>
+                </view>
+                <text class="rText">服务: {{item.specialdemand}}</text>
                  <!-- <text>负责人: {{item.person}}</text> -->
             </view>
         </view>
@@ -20,8 +22,8 @@
        <view wx:if="{{item.currentMeet ==''}}" class="ordersRoom" bindtap="itemClick"  id="{{item.id}}">
             <view class="roomLeft" >
             <text class="roomText">{{item.meetRoomName}}</text>
-                <text>下一会议: {{item.nextMeet}}</text>
-                <text>服务: {{item.specialdemand}}</text>
+                <text class="rText">下一会议: {{item.nextMeet}}</text>
+                <text class="rText">服务: {{item.specialdemand}}</text>
                  <!-- <text>负责人: {{item.person}}</text> -->
             </view>
         </view>
@@ -29,8 +31,8 @@
        <view wx:if="{{item.currentMeet !='' && item.currentMeet !='空闲' }}" class="ordersRoom" bindtap="itemClick"  id="{{item.id}}">
             <view class="roomLeft">
             <text class="roomText">{{item.meetRoomName}}</text>
-                <text>会议: {{item.currentMeet}}</text>
-                <text>服务: {{item.specialdemand}}</text>
+                <text class="rText">会议: {{item.currentMeet}}</text>
+                <text class="rText">服务: {{item.specialdemand}}</text>
                  <!-- <text>负责人: {{item.person}}</text> -->
             </view>
         </view>

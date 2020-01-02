@@ -37,7 +37,7 @@
                  <text>状态: 待审核</text>
             </view>
             <view class="roomBut" hidden="{{ordersBut}}">
-                <text bindtap="cancelMeet" id="{{item.id}}"> 撤消 </text>
+                <text bindtap="cancelMeet" id="{{item.glideNo}}"> 撤消 </text>
                 <text bindtap="modiMeet" id="{{item.id}}"> 修改 </text>
             </view>
         </view>

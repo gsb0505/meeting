@@ -36,6 +36,8 @@ var config = {
     //商品列表查询
     goodsListUrl: `${host}/goodsInfo/query`,
     uploadPhotoUrl: `${host}/goodsInfo/transferTo`,
+    roomOrderCancelUrl: `${host}/orderDetail/cancel`,
+    meetVerifiUrl: `${host}/orderDetail/meetVerifi`,
   },
 
   //硬编码的词典

@@ -45,7 +45,7 @@ Page({
       //接口返回
       var x2js = new X2JS();
       let details = x2js.xml2js(res.data)
-      let detailList = details == null || details == '' || typeof (details) == 'undefined' ? [] : details.meetRooms.meetRoom;
+      let detailList = typeof (details) == 'undefined' ? [] : details.meetRooms.meetRoom.length == undefined ? [details.meetRooms.meetRoom]: details.meetRooms.meetRoom;
       //给页面赋值
       that.setData({
         roomArray: detailList,

@@ -63,6 +63,9 @@ Component({
           });
         }
       });
+      this.setData({
+        orderDetailList:[]
+      })
       var today = utils.formatTime2(new Date());
       this.queryData(today);
     },
@@ -114,10 +117,12 @@ Component({
         //接口返回
         var x2js = new X2JS();
         let orderDetails = x2js.xml2js(res.data)
-        let orderDetailList = orderDetails == null || orderDetails == '' || typeof (orderDetails) == 'undefined' ? [] : orderDetails.orderDetails.orderDetail;
+        console.log(orderDetails.length)
+        debugger
+        let orderDetailList = orderDetails == undefined || typeof (orderDetails) =='undefined' ? [] : orderDetails.orderDetails.orderDetail.length == undefined ? [orderDetails.orderDetails.orderDetail]: orderDetails.orderDetails.orderDetail;
         // debugger      
-        let totalPage = orderDetailList == null ? 1 : orderDetailList[0].pageCount[0].totalPage;
-        let totalResult = orderDetailList == null ? 0 : orderDetailList[0].pageCount[0].totalResult;
+        let totalPage = orderDetailList.length==0 ? 1 : orderDetailList[0].pageCount.totalPage;
+        let totalResult = orderDetailList.length == 0 || orderDetailList.length == undefined ? 0 : orderDetailList[0].pageCount.totalResult;
         console.log(totalPage + "----" + totalResult);
         //给页面赋值
         that.setData({
@@ -268,7 +273,44 @@ Component({
         return arg.year + '-' + arg.month + '-' + arg.day + ' 00:00:00';
       }
     },
-
+    //撤消会议按钮
+    cancelMeet: function (e) {
+      let that = this;
+      let id = e.currentTarget.id;
+      let detail = {
+        'glideNo': id,
+        'errCode': 3
+      };
+      request.roomOrderCancel(detail, function (res) {
+        //接口返回
+        if (res.data == true) {
+          wx.showModal({
+            title: '预约撤消成功!',
+            content: '会议预约撤消成功',
+            confirmText: '知道了',
+            showCancel: false,
+            success: function (res) {
+              that.onShow();
+            }
+          })
+        } else {
+          wx.showModal({
+            title: '预约撤消失败!',
+            content: '会议预约撤消失败，请重试！',
+            confirmText: '知道了',
+            showCancel: false
+          })
+        }
+      })
+      console.log(id)
+    },
+    modiMeet: function (e) {
+      const id = e.currentTarget.id
+      console.log(id);
+      wx.navigateTo({
+        url: '/pages/booking/booking?id=' + id
+      });
+    },
     // 点击日历某日
     chooseDate(e) {
       var str = e.currentTarget.id;

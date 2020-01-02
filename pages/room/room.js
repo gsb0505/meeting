@@ -70,7 +70,7 @@ Component({
       this.queryData(today);
     },
     onLoad: function (options) {
-      getApp().auth();
+     // getApp().auth();
       // 页面初始化 options为页面跳转所带来的参数
     },
     /**
@@ -92,7 +92,7 @@ Component({
         wx.showLoading({
           title: '玩命加载中',
         })
-        this.queryData(errCode);
+        this.queryData(that.data.dateCurrentStr);
         wx.hideLoading();
       } else {
         wx.showLoading({
@@ -122,12 +122,22 @@ Component({
         let orderDetails = x2js.xml2js(res.data)
         console.log(typeof (orderDetails)=='undefined')
         console.log(orderDetails.orderDetails.orderDetail == undefined)
-         debugger
+        //  debugger
         let orderDetailList = typeof (orderDetails) == 'undefined' || orderDetails.orderDetails.orderDetail == undefined ? [] : orderDetails.orderDetails.orderDetail.length == undefined ? [orderDetails.orderDetails.orderDetail]: orderDetails.orderDetails.orderDetail;
-         debugger      
+        //  debugger      
         let totalPage = orderDetailList.length==0 ? 1 : orderDetailList[0].pageCount.totalPage;
         let totalResult = orderDetailList.length == 0 ? 0 : orderDetailList[0].pageCount.totalResult;
         console.log(totalPage + "----" + totalResult);
+        var today = utils.formatTime2(new Date());
+        if (cDate == today){
+          for (let i = 0; i < orderDetailList.length; i++) {
+            let orderDetail = orderDetailList[i]; 
+            let curDate = util.getCurrentTime();
+            if (orderDetail != null && orderDetail.meetStartTime != null && orderDetail.meetStartTime <= curDate && orderDetail.meetEndTime > curDate) {
+              orderDetail.errCode=5;
+            }
+          }
+        }
         //给页面赋值
         that.setData({
           orderDetailList: that.data.orderDetailList.concat(orderDetailList),

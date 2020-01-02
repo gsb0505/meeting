@@ -1,11 +1,12 @@
 {
   "pages": [
-    "pages/index/index",
+        "pages/index/index",
+    "pages/login/login",
+
     "pages/orders/orders",
     "pages/booking-detail/booking-detail",
     "pages/room/room",
     "pages/booking/booking",
-    "pages/login/login",
     "pages/article/article",
     "pages/personal/personal",
     "pages/sitting/sitting",

@@ -276,7 +276,11 @@ Page(Object.assign({
         let xmlStr = x2js.js2dom(that.data.table);
         console.log(JSON.stringify(that.data.table));
         if (that.data.modiOperation == false) {
-          request.roomOrderAdd(that.data.table, function (res) {
+             request.roomOrderAdd(that.data.table, function (res) {
+               var x2js = new X2JS();
+            let resluts = x2js.xml2js(res.data)
+            let reslutMessage = resluts == null || typeof (resluts) == 'undefined' ? [] : resluts.messageDto;
+
             debugger
             //接口返回
             var x2js = new X2JS();

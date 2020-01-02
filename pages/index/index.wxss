@@ -7,7 +7,7 @@
   position:fixed;
   width: 100%;
   bottom:0px;
-  height: 40px;
+  height: 45px;
 }
 .menuWrap-item{
   text-align: center;
@@ -27,7 +27,7 @@
 }
 .menuWrap-item-navi text{
   display: block;
-  margin-top: 3px;
+  margin-top: 2px;
 }
 .icon-qrcode{
   font-weight:bold;
@@ -36,20 +36,19 @@
     margin-bottom: 10rpx;
     padding-top:20rpx;
     padding-left: 100px;
-    height:220rpx;
-    border-top:1px solid #be9d6d;
-    border-bottom:1px solid #be9d6d;
+    height:198rpx;
+    border:1px solid #b1afaf;
     width: 98%;
     border-radius:5px;
-     background-color:#be9d6d;
+    background-color:#ffffff;
 }
 .roomLeft{
     float:left;
 }
 .roomLeft wx-text{
     display:block;
-    line-height:60rpx;
-    color: white;
+    line-height:48rpx;
+    letter-spacing: 2px
 }
 .roomBut{
     float:right;
@@ -61,19 +60,19 @@
     font-size:13px;
     text-align:center;
     text-decoration:none;
-    line-height:60rpx;
+    line-height:50rpx;
     border-radius:5px;
     -webkit-tap-highlight-color:transparent;
     overflow:hidden;
     color:#fff;
     background-color:#be9d6d;
     width:140rpx;
-    height:60rpx;
+    height:50rpx;
     border:1px solid #be9d6d;
     margin-bottom:14rpx;
 }
 .pull-down-load {
-    height: 90vh;
+    height: 92vh;
 }
 .roomContent{
   margin:0 auto;
@@ -82,4 +81,19 @@
 }
 .roomText{
   font-size: 16px;
+  color: black;
+}
+
+.rText{
+  font-size: 12px;
+   color: rgb(126, 123, 123);
+   display:inline-block;
+}
+.kongText{
+  font-size: 12px;
+  color: green;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: pre-line;
+  display:inline-block;
 }

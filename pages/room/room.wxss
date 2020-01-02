@@ -31,6 +31,7 @@
 .roomLeft wx-text{
     display:block;
     line-height:46rpx;
+    letter-spacing: 1px;
 }
 .roomBut{
     float:right;
@@ -222,4 +223,28 @@
  padding-top: 24rpx;
  padding-bottom :24rpx;
  
+}
+.t1{
+  font-size: 12px;
+  color: rgb(248, 184, 8);
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: pre-line;
+  display:inline-block;
+}
+.t2{
+  font-size: 12px;
+  color: green;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: pre-line;
+  display:inline-block;
+}
+.t3{
+  font-size: 12px;
+  color: rgb(82, 85, 82);
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: pre-line;
+  display:inline-block;
 }

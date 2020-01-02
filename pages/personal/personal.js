@@ -1,12 +1,15 @@
 // pages/personal/personal.js
+
 const app = getApp();
+const imageUpload = require('../../utils/imageUpload.js')
+
 Page({
   data:{
     userId:"",
     phone:""
   },
   onLoad:function(options){
-     getApp().auth();
+    // getApp().auth();
     // 页面初始化 options为页面跳转所带来的参数
   },
   onReady:function(){
@@ -73,5 +76,31 @@ Page({
   },
   getScanning: function () {
     app.getScanning()
+  },
+  // 点击上传图片
+
+  upShopLogo: function () {
+    const that = this
+    imageUpload.tabkePhotoAndUpload(function (path) {
+      that.setData({ userHead: path })
+      wx.showToast({
+        title: '拍照并上传成功',
+        icon: 'success',
+        duration: 2000
+      })
+    }, function (error) {
+      wx.showModal({
+        title: '拍照上传失败',
+        content: error,
+        confirmText: '知道了',
+        showCancel: false,
+        success: function () {
+        }
+      })
+    }, function (path) {
+      that.setData({ userHead: path })
+
+    })
   }
+ 
 })

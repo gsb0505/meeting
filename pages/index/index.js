@@ -16,7 +16,7 @@ Page({
     stopLoadMoreTiem:false
   },
   onLoad: function () {
-    // getApp().auth();
+    //getApp().auth();
   },
   onShow:function(){
     this.setData({

@@ -9,9 +9,7 @@
     "pages/article/article",
     "pages/personal/personal",
     "pages/sitting/sitting",
-    "pages/scanning/scanning",
-    "pages/conference/conference"
-    
+    "pages/scanning/scanning"
   ],
   "tabBar": {
     "selectedColor": "#be9d6d",

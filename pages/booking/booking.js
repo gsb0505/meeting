@@ -58,7 +58,7 @@ Page(Object.assign({
       numberList:[],
     },
     onLoad: function(options) {
-      // getApp().auth();
+       getApp().auth();
       // 页面初始化 options为页面跳转所带来的参数
       this.queryGoodData();
       this.setData({
@@ -278,7 +278,11 @@ Page(Object.assign({
         if (that.data.modiOperation == false) {
           request.roomOrderAdd(that.data.table, function (res) {
             debugger
-            if (res.data==true) {
+            //接口返回
+            var x2js = new X2JS();
+            let ms = x2js.xml2js(res.data)
+            let msCode = typeof (ms) == 'undefined' ? [] : ms.messageDto;
+            if (msCode.retcode != undefined && msCode.retcode == 'true') {
               wx.showModal({
                 title: '预约成功!',
                 content: '会议预约成功',
@@ -292,24 +296,31 @@ Page(Object.assign({
                 }
               })
             }else{
-              wx.showModal({
-                title: '预约失败',
-                content: '会议预约失败，请重试！',
-                confirmText: '知道了',
-                showCancel: false,
-                success: function () {
-                  wx.reLaunch({
-                    url: '../orders/orders',
-                  })
-                }
-              })
+              if (msCode.message != undefined) {
+                wx.showModal({
+                  title: '预约失败',
+                  content: msCode.message,
+                  confirmText: '知道了',
+                  showCancel: false
+                })
+              } else {
+                wx.showModal({
+                  title: '预约失败',
+                  content: '会议预约失败，请重试！',
+                  confirmText: '知道了',
+                  showCancel: false
+                })
+              }
             }
           })
         } else {
           request.roomOrderUpdate(that.data.table, function (res) {
             //接口返回
             debugger
-            if (res.data == true) {
+            var x2js = new X2JS();
+            let ms = x2js.xml2js(res.data)
+            let msCode = typeof (ms) == 'undefined' ? [] : ms.messageDto;
+            if (msCode.retcode != undefined && msCode.retcode == 'true') {
               wx.showModal({
                 title: '预约修改成功!',
                 content: '会议预约修改成功',
@@ -323,12 +334,21 @@ Page(Object.assign({
                 }
               })
             } else {
-              wx.showModal({
-                title: '预约修改失败',
-                content: '会议预约修改失败，请重试！',
-                confirmText: '知道了',
-                showCancel: false
-              })
+              if (msCode.message != undefined){
+                wx.showModal({
+                  title: '预约修改失败',
+                  content: msCode.message,
+                  confirmText: '知道了',
+                  showCancel: false
+                })
+              }else{
+                wx.showModal({
+                  title: '预约修改失败',
+                  content: '会议预约修改失败，请重试！',
+                  confirmText: '知道了',
+                  showCancel: false
+                })
+              }
             }
           })
         }

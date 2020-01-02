@@ -69,7 +69,10 @@ Component({
       var today = utils.formatTime2(new Date());
       this.queryData(today);
     },
-
+    onLoad: function (options) {
+      getApp().auth();
+      // 页面初始化 options为页面跳转所带来的参数
+    },
     /**
     * 滚动条加载
     */
@@ -117,10 +120,13 @@ Component({
         //接口返回
         var x2js = new X2JS();
         let orderDetails = x2js.xml2js(res.data)
-        let orderDetailList = typeof (orderDetails) == 'undefined' ? [] : orderDetails.orderDetails.orderDetail.length == undefined ? [orderDetails.orderDetails.orderDetail]: orderDetails.orderDetails.orderDetail;
-        // debugger      
-        let totalPage = orderDetailList == null ? 1 : orderDetailList[0].pageCount.totalPage;
-        let totalResult = orderDetailList == null ? 0 : orderDetailList[0].pageCount.totalResult;
+        console.log(typeof (orderDetails)=='undefined')
+        console.log(orderDetails.orderDetails.orderDetail == undefined)
+         debugger
+        let orderDetailList = typeof (orderDetails) == 'undefined' || orderDetails.orderDetails.orderDetail == undefined ? [] : orderDetails.orderDetails.orderDetail.length == undefined ? [orderDetails.orderDetails.orderDetail]: orderDetails.orderDetails.orderDetail;
+         debugger      
+        let totalPage = orderDetailList.length==0 ? 1 : orderDetailList[0].pageCount.totalPage;
+        let totalResult = orderDetailList.length == 0 ? 0 : orderDetailList[0].pageCount.totalResult;
         console.log(totalPage + "----" + totalResult);
         //给页面赋值
         that.setData({

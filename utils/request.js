@@ -121,7 +121,7 @@ const meetDetailList = (params,success,fail) =>{
 
 /*查询会议预约*/
 const meetVerifi = (params, success, fail) => {
-  debugger
+  // debugger
   var options = {
     url: config.service.meetVerifiUrl,
     data: {

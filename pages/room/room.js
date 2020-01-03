@@ -70,7 +70,7 @@ Component({
       this.queryData(today);
     },
     onLoad: function (options) {
-     // getApp().auth();
+      getApp().auth();
       // 页面初始化 options为页面跳转所带来的参数
     },
     /**
@@ -120,10 +120,10 @@ Component({
         //接口返回
         var x2js = new X2JS();
         let orderDetails = x2js.xml2js(res.data)
-        console.log(typeof (orderDetails)=='undefined')
-        console.log(orderDetails.orderDetails.orderDetail == undefined)
+        console.log(orderDetails == undefined)
+        console.log(orderDetails.orderDetails == '')
         //  debugger
-        let orderDetailList = typeof (orderDetails) == 'undefined' || orderDetails.orderDetails.orderDetail == undefined ? [] : orderDetails.orderDetails.orderDetail.length == undefined ? [orderDetails.orderDetails.orderDetail]: orderDetails.orderDetails.orderDetail;
+        let orderDetailList = orderDetails == undefined || orderDetails.orderDetails == '' ? [] : orderDetails.orderDetails.orderDetail.length == undefined ? [orderDetails.orderDetails.orderDetail]: orderDetails.orderDetails.orderDetail;
         //  debugger      
         let totalPage = orderDetailList.length==0 ? 1 : orderDetailList[0].pageCount.totalPage;
         let totalResult = orderDetailList.length == 0 ? 0 : orderDetailList[0].pageCount.totalResult;

@@ -1,6 +1,8 @@
 // pages/orders/orders.js
 const request = require('../../utils/request.js')
 const X2JS = require('../../utils/we-x2js.js')
+const utils = require('../../utils/utils.js')
+const util = require('../../utils/util.js')
 var app = getApp()
 Page({
   data:{
@@ -14,6 +16,7 @@ Page({
     col2:'',
     col3:'',
     col4:'',
+    col5:'',
     borLeft: '3px solid #be9d6d',
     // 当前页
     pageNumber: 1,
@@ -26,7 +29,7 @@ Page({
   },
   onLoad:function(){
     //登录验证
-      getApp().auth();
+     // getApp().auth();
   },
   onShow: function(){
     this.setData({
@@ -44,22 +47,26 @@ Page({
     let col2 = '';
     let col3 = '';
     let col4 = '';
+    let col5 = '';
     let left = '1%';
     if (id == 0){
       col0 ='#be9d6d';
       left='1%';
     }else if (id == 1 ){
       col1 = '#be9d6d';
-      left = '21%';
+      left = '16.6%';
     } else if (id == 2) {
       col2 = '#be9d6d';
-      left = '61%';
+      left = '33.3%';
     } else if (id == 3) {
       col3 = '#be9d6d';
-      left = '81%';
+      left = '82.1%';
     } else if (id == 4) {
       col4 = '#be9d6d';
-      left = '41%';
+      left = '65.5%';
+    } else if (id == 5) {
+      col5 = '#be9d6d';
+      left = '49.9%';
     } 
 
     // 选择会议类型
@@ -69,6 +76,7 @@ Page({
       col2: col2,
       col3: col3,
       col4: col4,
+      col5: col5,
       Left: left,
       pageNumber: 1,
       orderDetailList: []
@@ -84,7 +92,7 @@ Page({
     const that = this
     //获取userid公共变量
     let userId = app.globalData.userId;
-    let page_size = that.data.page_size;
+    let page_size =  that.data.page_size;
     // debugger
     //调用会议查询接口
     request.meetList({
@@ -93,12 +101,27 @@ Page({
       var x2js = new X2JS();
       let orderDetails = x2js.xml2js(res.data);
         console.log(orderDetails);
-        let orderDetailList = typeof (orderDetails) == 'undefined' ? [] : orderDetails.orderDetails.orderDetail.length == undefined ?[orderDetails.orderDetails.orderDetail]:orderDetails.orderDetails.orderDetail;
+        console.log(orderDetails.orderDetails=='');
+        let orderDetailList = orderDetails == undefined || orderDetails.orderDetails == '' ? [] : orderDetails.orderDetails.orderDetail.length == undefined ?[orderDetails.orderDetails.orderDetail]:orderDetails.orderDetails.orderDetail;
         console.log(orderDetailList)
-      // debugger      
-      let totalPage = orderDetailList == null ? 1 :orderDetailList[0].pageCount.totalPage;
-      let totalResult = orderDetailList == null ? 0 : orderDetailList[0].pageCount.totalResult;
+            
+      let totalPage = orderDetailList.length==0 ? 1 :orderDetailList[0].pageCount.totalPage;
+      let totalResult = orderDetailList.length == 0 ? 0 : orderDetailList[0].pageCount.totalResult;
         console.log(orderDetails);
+      //    debugger
+      // var today = utils.formatTime2(new Date());
+      // for (let i = 0; i < orderDetailList.length; i++) {
+      //   let orderDetail = orderDetailList[i];
+      //   let curDate = util.getCurrentTime();
+      //   if (orderDetail != null && orderDetail.meetDate == today && orderDetail.meetStartTime != null && orderDetail.meetStartTime <= curDate && orderDetail.meetEndTime > curDate && orderDetail.errCode==2) {
+      //      orderDetail.errCode = 5;
+      //   }else{
+      //     if (errCode==5){
+      //       orderDetailList.splice(i,1) ;
+      //       i--;
+      //     }
+      //   }
+      // }
       //给页面赋值
       that.setData({
         orderDetailList: that.data.orderDetailList.concat(orderDetailList),

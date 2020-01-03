@@ -2,8 +2,9 @@
 <view class="ordersTab">
     <text bindtap="tabRight" id = '0' style="color:{{col0}};">我的预约</text>
     <text bindtap="tabRight" id = '1' style="color:{{col1}};">待审核</text>
-    <text bindtap="tabRight" id = '4' style="color:{{col4}};">待使用</text>
-    <text bindtap="tabRight" id = '2' style="color:{{col2}};">已完成</text>
+    <text bindtap="tabRight" id = '2' style="color:{{col2}};">待使用</text>
+    <text bindtap="tabRight" id = '5' style="color:{{col5}};">使用中</text>
+    <text bindtap="tabRight" id = '4' style="color:{{col4}};">已完成</text>
     <text bindtap="tabRight" id = '3' style="color:{{col3}};">已撤销</text>
     <view class="tabCalled" style="left:{{Left}}"></view>
 </view>
@@ -17,32 +18,33 @@
             <text>{{item.meetName}}</text>
                 <text>预定时间: {{item.meetDate}} {{item.meetStartTime}} -- {{item.meetEndTime}}  </text>
                 <text>会议室门号: {{item.meetRoomName}}</text>
-                 <text>状态: 待审核</text>
+                <text style="display:inline-block;">状态: </text><label class="t4"> 待审核</label>
             </view>
             <view class="roomBut" hidden="{{ordersBut}}">
                 <text bindtap="cancelMeet" id="{{item.glideNo}}"> 撤消 </text>
                 <text bindtap="modiMeet" id="{{item.id}}"> 修改 </text>
             </view>
         </view>
-              <!-- 待使用 -->
+              <!-- 已完成 -->
        <view wx:if="{{item.errCode == 4}}" class="ordersRoom" >
             <view class="roomLeft" bindtap="lookMeet" id="{{item.id}}">
             <text>{{item.meetName}}</text>
                 <text>预定时间: {{item.meetDate}} {{item.meetStartTime}} -- {{item.meetEndTime}}  </text>
                 <text>会议室门号: {{item.meetRoomName}}</text>
-                <text>状态: 待使用</text>
+                 <text style="display:inline-block;">状态: </text><label class="t3"> 已完成</label>
             </view>
-             <view class="roomBut" hidden="{{ordersBut}}">
-                <text bindtap="modiMeet" id="{{item.id}}"> 修改 </text>
-            </view>
+            
         </view>
-        <!-- 已完成 -->
+        <!-- 待使用 -->
        <view wx:if="{{item.errCode == 2}}" class="ordersRoom" >
             <view class="roomLeft" bindtap="lookMeet" id="{{item.id}}">
             <text>{{item.meetName}}</text>
                 <text>预定时间: {{item.meetDate}} {{item.meetStartTime}} -- {{item.meetEndTime}}  </text>
                 <text>会议室门号: {{item.meetRoomName}}</text>
-                <text>状态: 已完成</text>
+                <text style="display:inline-block;">状态: </text><label class="t2"> 待使用</label>
+            </view>
+             <view class="roomBut" hidden="{{ordersBut}}">
+                <text bindtap="modiMeet" id="{{item.id}}"> 修改 </text>
             </view>
         </view>
           <!-- 已撤销 -->
@@ -51,7 +53,16 @@
             <text>{{item.meetName}}</text>
                 <text>预定时间: {{item.meetDate}} {{item.meetStartTime}} -- {{item.meetEndTime}}  </text>
                 <text>会议室门号: {{item.meetRoomName}}</text>
-                <text>状态: 已撤销</text>
+                <text style="display:inline-block;">状态: </text><label class="t3"> 已撤销</label>
+            </view>
+        </view>
+            <!-- 使用中 -->
+       <view wx:if="{{item.errCode == 5}}" class="ordersRoom" >
+            <view class="roomLeft">
+            <text >{{item.meetName}}</text>
+                <text >预定时间: {{item.meetDate}} {{item.meetStartTime}} -- {{item.meetEndTime}}  </text>
+                <text >会议室门号: {{item.meetRoomName}}</text>
+                <text style="display:inline-block;">状态: </text><label class="t1"> 使用中</label>
             </view>
         </view>
     </block>

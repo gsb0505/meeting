@@ -34,7 +34,7 @@
             <text >{{item.meetName}}</text>
                 <text >预定时间: {{item.meetDate}} {{item.meetStartTime}} -- {{item.meetEndTime}}  </text>
                 <text >会议室门号: {{item.meetRoomName}}</text>
-                 <text >状态: 待审核</text>
+                <text style="display:inline-block;">状态: </text><label class="t4"> 待审核</label>
             </view>
             <view class="roomBut" hidden="{{ordersBut}}">
                 <text bindtap="cancelMeet" id="{{item.glideNo}}"> 撤消 </text>
@@ -47,7 +47,7 @@
             <text>{{item.meetName}}</text>
                 <text>预定时间: {{item.meetDate}} {{item.meetStartTime}} -- {{item.meetEndTime}}  </text>
                 <text>会议室门号: {{item.meetRoomName}}</text>
-                <text>状态: 已完成</text>
+                <text style="display:inline-block;">状态: </text><label class="t3"> 已完成</label>
             </view>
             
         </view>
